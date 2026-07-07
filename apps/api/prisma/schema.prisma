@@ -1,0 +1,171 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Channel {
+  whatsapp
+  webchat
+}
+
+enum MessageDirection {
+  inbound
+  outbound
+}
+
+enum ConversationStatus {
+  open
+  waiting_customer
+  needs_human
+  closed
+}
+
+enum ConversationIntent {
+  normal_order
+  special_order
+  restaurant_order
+  faq
+  human_support
+  unknown
+}
+
+model Company {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  name      String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  config       CompanyConfig?
+  contacts     Contact[]
+  conversations Conversation[]
+  messages     Message[]
+  knowledge    KnowledgeBaseEntry[]
+  notes        InternalNote[]
+}
+
+model CompanyConfig {
+  id        String   @id @default(cuid())
+  companyId String  @unique
+  language  String  @default("es")
+  timezone  String  @default("Europe/Madrid")
+  internalEmail String?
+  settings  Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+}
+
+model Contact {
+  id          String   @id @default(cuid())
+  companyId   String
+  channel     Channel
+  externalId  String
+  displayName String?
+  phone       String?
+  email       String?
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  company       Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  conversations Conversation[]
+  messages      Message[]
+
+  @@unique([companyId, channel, externalId])
+  @@index([companyId])
+}
+
+model Conversation {
+  id              String             @id @default(cuid())
+  companyId       String
+  contactId       String
+  channel         Channel
+  status          ConversationStatus @default(open)
+  intent          ConversationIntent @default(unknown)
+  providerThreadId String?
+  collectedData   Json?
+  summary         String?
+  lastMessageAt   DateTime?
+  firstResponseAt DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  company     Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  contact     Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  messages    Message[]
+  flowSession FlowSession?
+  notes       InternalNote[]
+
+  @@index([companyId, status])
+  @@index([companyId, intent])
+}
+
+model Message {
+  id             String           @id @default(cuid())
+  companyId      String
+  contactId      String?
+  conversationId String?
+  channel        Channel
+  direction      MessageDirection
+  body           String
+  provider       String?
+  providerMessageId String?
+  metadata       Json?
+  createdAt      DateTime @default(now())
+
+  company      Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  contact      Contact? @relation(fields: [contactId], references: [id], onDelete: SetNull)
+  conversation Conversation? @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+
+  @@index([companyId, createdAt])
+  @@index([conversationId])
+}
+
+model FlowSession {
+  id             String   @id @default(cuid())
+  conversationId String  @unique
+  flowKey        String
+  currentStep    Int     @default(0)
+  collectedData  Json    @default("{}")
+  completedAt    DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+}
+
+model InternalNote {
+  id             String   @id @default(cuid())
+  companyId      String
+  conversationId String
+  body           String
+  author         String?
+  createdAt      DateTime @default(now())
+
+  company      Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([companyId])
+}
+
+model KnowledgeBaseEntry {
+  id        String   @id @default(cuid())
+  companyId String
+  question  String
+  answer    String
+  keywords  String[]
+  isActive  Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId])
+}

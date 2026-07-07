@@ -1,0 +1,28 @@
+{
+  "name": "commercial-chatbot-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Agnostic conversational automation backend with a Beinetti MVP configuration.",
+  "scripts": {
+    "dev": "pnpm --parallel --filter @chatbot/api --filter @chatbot/admin dev",
+    "dev:api": "pnpm --filter @chatbot/api dev",
+    "dev:admin": "pnpm --filter @chatbot/admin dev",
+    "build": "pnpm -r build",
+    "test": "node apps/api/node_modules/jest/bin/jest.js --config apps/api/package.json --runInBand",
+    "lint": "pnpm -r lint",
+    "env:check": "node scripts/check-env.mjs",
+    "db:generate": "pnpm --filter @chatbot/api prisma:generate",
+    "db:migrate": "pnpm --filter @chatbot/api prisma:migrate",
+    "db:deploy": "pnpm --filter @chatbot/api prisma:deploy",
+    "db:studio": "pnpm --filter @chatbot/api prisma:studio",
+    "db:seed": "pnpm --filter @chatbot/api prisma:seed"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.20.0",
+    "@typescript-eslint/parser": "^8.20.0",
+    "eslint": "^9.18.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.3"
+  },
+  "packageManager": "pnpm@9.15.4"
+}

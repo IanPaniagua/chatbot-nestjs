@@ -1,0 +1,9 @@
+node_modules
+.pnpm-store
+.env
+.env.local
+dist
+.next
+coverage
+*.log
+apps/api/prisma/migrations/migration_lock.toml

@@ -1,0 +1,279 @@
+{"kind":"deck","id":"pr/venqrk","name":"Deck"}
+{"kind":"layout","layoutId":"0d14363b-3373-41a3-9165-94bace617eab","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"4badae45-25a7-4704-978b-cf89cf686587","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/fjxjha","slide":1,"title":"PRODUCT BRIEF","textShapes":13}
+{"kind":"textbox","id":"sh/hcrmhk3q","slide":1,"text":"PRODUCT BRIEF","textPreview":"PRODUCT BRIEF","textChars":13,"textLines":1,"bbox":[68,64,260,18]}
+{"kind":"textbox","id":"sh/al87ed8b","slide":1,"text":"Ordenar WhatsApp para crecer sin duplicar trabajo","textPreview":"Ordenar WhatsApp para crecer sin duplicar trabajo","textChars":49,"textLines":1,"bbox":[68,118,760,154]}
+{"kind":"textbox","id":"sh/z61032ls","slide":1,"text":"MVP para automatizar conversaciones, reducir errores y preparar la integración futura con Agora POS.","textPreview":"MVP para automatizar conversaciones, reducir errores y preparar la integración futura con Agora POS.","textChars":100,"textLines":1,"bbox":[68,300,720,68]}
+{"kind":"shape","id":"sh/sfil0rqd","slide":1,"bbox":[875,108,270,270]}
+{"kind":"textbox","id":"sh/h0fepkzu","slide":1,"text":"WA","textPreview":"WA","textChars":2,"textLines":1,"bbox":[920,180,180,56]}
+{"kind":"textbox","id":"sh/a9w3m94f","slide":1,"text":"Bot + equipo\n+ pedidos claros","textPreview":"Bot + equipo | + pedidos claros","textChars":29,"textLines":2,"bbox":[900,254,220,70]}
+{"kind":"shape","id":"sh/zupwb2hw","slide":1,"bbox":[68,484,238,112]}
+{"kind":"textbox","id":"sh/obm58z25","slide":1,"text":"R1","textPreview":"R1","textChars":2,"textLines":1,"bbox":[86,518,202,58]}
+{"kind":"textbox","id":"sh/hwfyxobm","slide":1,"text":"MVP operativo","textPreview":"MVP operativo","textChars":13,"textLines":1,"bbox":[94,590,186,42]}
+{"kind":"shape","id":"sh/t83itgfm","slide":1,"bbox":[340,484,238,112]}
+{"kind":"textbox","id":"sh/4nap4r65","slide":1,"text":"R2","textPreview":"R2","textChars":2,"textLines":1,"bbox":[358,518,202,58]}
+{"kind":"textbox","id":"sh/b2hwfyxo","slide":1,"text":"Optimización","textPreview":"Optimización","textChars":12,"textLines":1,"bbox":[366,590,186,42]}
+{"kind":"shape","id":"sh/mhk3q5o7","slide":1,"bbox":[612,484,290,112]}
+{"kind":"textbox","id":"sh/twra5gbq","slide":1,"text":"3.500 EUR","textPreview":"3.500 EUR","textChars":9,"textLines":1,"bbox":[630,518,254,58]}
+{"kind":"textbox","id":"sh/4byhgn29","slide":1,"text":"Desarrollo inicial","textPreview":"Desarrollo inicial","textChars":18,"textLines":1,"bbox":[638,590,238,42]}
+{"kind":"textbox","id":"sh/bq1oryts","slide":1,"text":"Postres Beinetti · Product brief WhatsApp","textPreview":"Postres Beinetti · Product brief WhatsApp","textChars":41,"textLines":1,"bbox":[68,676,470,18]}
+{"kind":"textbox","id":"sh/m58z25kb","slide":1,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[1160,676,54,18]}
+{"kind":"notes","id":"nt/fjxjha","slide":1,"text":""}
+{"kind":"slide","id":"sl/l5l8uv","slide":2,"title":"WhatsApp ya es el canal principal","textShapes":11}
+{"kind":"textbox","id":"sh/mp0bi9s3","slide":2,"text":"WhatsApp ya es el canal principal","textPreview":"WhatsApp ya es el canal principal","textChars":33,"textLines":1,"bbox":[68,44,1060,58]}
+{"kind":"textbox","id":"sh/tgfmlkjm","slide":2,"text":"La oportunidad está en ordenar un canal que el cliente ya usa.","textPreview":"La oportunidad está en ordenar un canal que el cliente ya usa.","textChars":62,"textLines":1,"bbox":[68,112,980,34]}
+{"kind":"shape","id":"sh/4vmtwra5","slide":2,"bbox":[68,164,1144,2]}
+{"kind":"shape","id":"sh/bm58z25k","slide":2,"bbox":[88,238,330,230]}
+{"kind":"shape","id":"sh/m1cfa9w3","slide":2,"bbox":[88,238,8,230]}
+{"kind":"textbox","id":"sh/tsvu9kni","slide":2,"text":"Hoy","textPreview":"Hoy","textChars":3,"textLines":1,"bbox":[112,258,286,32]}
+{"kind":"textbox","id":"sh/47y1kre1","slide":2,"text":"Pedidos particulares, restaurantes, tartas especiales y dudas entran mezclados por WhatsApp.","textPreview":"Pedidos particulares, restaurantes, tartas especiales y dudas entran mezclados por WhatsApp.","textChars":92,"textLines":1,"bbox":[112,302,286,150]}
+{"kind":"shape","id":"sh/bq1oryts","slide":2,"bbox":[474,238,330,230]}
+{"kind":"shape","id":"sh/m58z25kb","slide":2,"bbox":[474,238,8,230]}
+{"kind":"textbox","id":"sh/o7qpg3ex","slide":2,"text":"Crecimiento","textPreview":"Crecimiento","textChars":11,"textLines":1,"bbox":[498,258,286,32]}
+{"kind":"textbox","id":"sh/dsji5sne","slide":2,"text":"Más tiendas y más volumen hacen que el proceso manual sea cada vez más caro y frágil.","textPreview":"Más tiendas y más volumen hacen que el proceso manual sea cada vez más caro y frágil.","textChars":85,"textLines":1,"bbox":[498,302,286,150]}
+{"kind":"shape","id":"sh/61032lsz","slide":2,"bbox":[860,238,330,230]}
+{"kind":"shape","id":"sh/vmtwra5g","slide":2,"bbox":[860,238,8,230]}
+{"kind":"textbox","id":"sh/oj2t83it","slide":2,"text":"Direccion correcta","textPreview":"Direccion correcta","textChars":18,"textLines":1,"bbox":[884,258,286,32]}
+{"kind":"textbox","id":"sh/d4vmtwra","slide":2,"text":"No se cambia WhatsApp. Se crea una capa que clasifica, pregunta y registra antes de pasar al equipo.","textPreview":"No se cambia WhatsApp. Se crea una capa que clasifica, pregunta y registra antes de pasar al equipo.","textChars":100,"textLines":1,"bbox":[884,302,286,150]}
+{"kind":"textbox","id":"sh/6dcbulwv","slide":2,"text":"La meta del MVP es convertir conversaciones sueltas en pedidos y casos revisables.","textPreview":"La meta del MVP es convertir conversaciones sueltas en pedidos y casos revisables.","textChars":82,"textLines":1,"bbox":[174,544,932,34]}
+{"kind":"textbox","id":"sh/vy90je9c","slide":2,"text":"Postres Beinetti · Product brief WhatsApp","textPreview":"Postres Beinetti · Product brief WhatsApp","textChars":41,"textLines":1,"bbox":[68,676,470,18]}
+{"kind":"textbox","id":"sh/onyd0z61","slide":2,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[1160,676,54,18]}
+{"kind":"notes","id":"nt/l5l8uv","slide":2,"text":""}
+{"kind":"slide","id":"sl/9nj2ck","slide":3,"title":"El problema no es el volumen, es la falta de estructura","textShapes":14}
+{"kind":"textbox","id":"sh/d0z61032","slide":3,"text":"El problema no es el volumen, es la falta de estructura","textPreview":"El problema no es el volumen, es la falta de estructura","textChars":55,"textLines":1,"bbox":[68,44,1060,58]}
+{"kind":"textbox","id":"sh/29gr2p8n","slide":3,"text":"Cada mensaje manualmente interpretado aumenta tiempo y riesgo.","textPreview":"Cada mensaje manualmente interpretado aumenta tiempo y riesgo.","textChars":62,"textLines":1,"bbox":[68,112,980,34]}
+{"kind":"shape","id":"sh/vu9knih4","slide":3,"bbox":[68,164,1144,2]}
+{"kind":"shape","id":"sh/knih4byh","slide":3,"bbox":[110,210,1060,78]}
+{"kind":"shape","id":"sh/d8bat47y","slide":3,"bbox":[110,210,8,78]}
+{"kind":"textbox","id":"sh/2lszqtcj","slide":3,"text":"Tiempo repetitivo","textPreview":"Tiempo repetitivo","textChars":17,"textLines":1,"bbox":[142,225,260,26]}
+{"kind":"textbox","id":"sh/v6psfil0","slide":3,"text":"El equipo responde una y otra vez a dudas frecuentes.","textPreview":"El equipo responde una y otra vez a dudas frecuentes.","textChars":53,"textLines":1,"bbox":[430,227,660,24]}
+{"kind":"shape","id":"sh/kre1w7mp","slide":3,"bbox":[110,298,1060,78]}
+{"kind":"shape","id":"sh/dcbulwva","slide":3,"bbox":[110,298,8,78]}
+{"kind":"textbox","id":"sh/lszqtcj6","slide":3,"text":"Datos incompletos","textPreview":"Datos incompletos","textChars":17,"textLines":1,"bbox":[142,313,260,26]}
+{"kind":"textbox","id":"sh/s72x4nap","slide":3,"text":"Fecha, tienda, cantidad y sabor llegan repartidos.","textPreview":"Fecha, tienda, cantidad y sabor llegan repartidos.","textChars":50,"textLines":1,"bbox":[430,315,660,24]}
+{"kind":"shape","id":"sh/3m94fu18","slide":3,"bbox":[110,386,1060,78]}
+{"kind":"shape","id":"sh/a5gbq1or","slide":3,"bbox":[110,386,8,78]}
+{"kind":"textbox","id":"sh/h4byhgn2","slide":3,"text":"Flujos mezclados","textPreview":"Flujos mezclados","textChars":16,"textLines":1,"bbox":[142,401,260,26]}
+{"kind":"textbox","id":"sh/sji5snel","slide":3,"text":"Particulares, restaurantes y tartas especiales entran juntos.","textPreview":"Particulares, restaurantes y tartas especiales entran juntos.","textChars":61,"textLines":1,"bbox":[430,403,660,24]}
+{"kind":"shape","id":"sh/3ylc7u54","slide":3,"bbox":[110,474,1060,78]}
+{"kind":"shape","id":"sh/adsji5sn","slide":3,"bbox":[110,474,8,78]}
+{"kind":"textbox","id":"sh/hgn29gr2","slide":3,"text":"Errores humanos","textPreview":"Errores humanos","textChars":15,"textLines":1,"bbox":[142,489,260,26]}
+{"kind":"textbox","id":"sh/svu9knih","slide":3,"text":"Copiar pedidos manualmente aumenta olvidos y datos mal pasados.","textPreview":"Copiar pedidos manualmente aumenta olvidos y datos mal pasados.","textChars":63,"textLines":1,"bbox":[430,491,660,24]}
+{"kind":"shape","id":"sh/4r65wjud","slide":3,"bbox":[110,562,1060,78]}
+{"kind":"shape","id":"sh/xc3ylc7u","slide":3,"bbox":[110,562,8,78]}
+{"kind":"textbox","id":"sh/mlkjm1cf","slide":3,"text":"Escala limitada","textPreview":"Escala limitada","textChars":15,"textLines":1,"bbox":[142,577,260,26]}
+{"kind":"textbox","id":"sh/f6dcbulw","slide":3,"text":"Mas tiendas multiplican la carga si el proceso sigue igual.","textPreview":"Mas tiendas multiplican la carga si el proceso sigue igual.","textChars":59,"textLines":1,"bbox":[430,579,660,24]}
+{"kind":"textbox","id":"sh/4zidonyd","slide":3,"text":"Postres Beinetti · Product brief WhatsApp","textPreview":"Postres Beinetti · Product brief WhatsApp","textChars":41,"textLines":1,"bbox":[68,676,470,18]}
+{"kind":"textbox","id":"sh/xkf6dcbu","slide":3,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[1160,676,54,18]}
+{"kind":"notes","id":"nt/9nj2ck","slide":3,"text":""}
+{"kind":"slide","id":"sl/c3x6up","slide":4,"title":"La solución es una capa operativa sobre WhatsApp","textShapes":13}
+{"kind":"textbox","id":"sh/dg7adsji","slide":4,"text":"La solución es una capa operativa sobre WhatsApp","textPreview":"La solución es una capa operativa sobre WhatsApp","textChars":48,"textLines":1,"bbox":[68,44,1060,58]}
+{"kind":"textbox","id":"sh/6tovahoz","slide":4,"text":"Twilio conecta el WhatsApp de Beinetti con el sistema de automatización.","textPreview":"Twilio conecta el WhatsApp de Beinetti con el sistema de automatización.","textChars":72,"textLines":1,"bbox":[68,112,980,34]}
+{"kind":"shape","id":"sh/vahoza1g","slide":4,"bbox":[68,164,1144,2]}
+{"kind":"shape","id":"sh/onyd0z61","slide":4,"bbox":[76,292,210,122]}
+{"kind":"textbox","id":"sh/d8v6psfi","slide":4,"text":"Cliente","textPreview":"Cliente","textChars":7,"textLines":1,"bbox":[96,316,170,28]}
+{"kind":"textbox","id":"sh/6hcrmhk3","slide":4,"text":"Escribe por WhatsApp","textPreview":"Escribe por WhatsApp","textChars":20,"textLines":1,"bbox":[98,354,166,38]}
+{"kind":"shape","id":"sh/z25kb6xk","slide":4,"bbox":[342,292,210,122]}
+{"kind":"textbox","id":"sh/oj2t83it","slide":4,"text":"Twilio","textPreview":"Twilio","textChars":6,"textLines":1,"bbox":[362,316,170,28]}
+{"kind":"textbox","id":"sh/d4vmtwra","slide":4,"text":"Puente tecnico","textPreview":"Puente tecnico","textChars":14,"textLines":1,"bbox":[364,354,166,38]}
+{"kind":"shape","id":"sh/h4byhgn2","slide":4,"bbox":[608,292,210,122]}
+{"kind":"textbox","id":"sh/sji5snel","slide":4,"text":"Sistema","textPreview":"Sistema","textChars":7,"textLines":1,"bbox":[628,316,170,28]}
+{"kind":"textbox","id":"sh/3ylc7u54","slide":4,"text":"Clasifica y recoge datos","textPreview":"Clasifica y recoge datos","textChars":24,"textLines":1,"bbox":[630,354,166,38]}
+{"kind":"shape","id":"sh/adsji5sn","slide":4,"bbox":[874,292,210,122]}
+{"kind":"textbox","id":"sh/lszqtcj6","slide":4,"text":"Equipo","textPreview":"Equipo","textChars":6,"textLines":1,"bbox":[894,316,170,28]}
+{"kind":"textbox","id":"sh/s72x4nap","slide":4,"text":"Recibe resumen claro","textPreview":"Recibe resumen claro","textChars":20,"textLines":1,"bbox":[896,354,166,38]}
+{"kind":"shape","id":"sh/3m94fu18","slide":4,"bbox":[286,353,56,0]}
+{"kind":"shape","id":"sh/a5gbq1or","slide":4,"bbox":[552,353,56,0]}
+{"kind":"shape","id":"sh/hoza1gvy","slide":4,"bbox":[818,353,56,0]}
+{"kind":"textbox","id":"sh/s36hcrmh","slide":4,"text":"Para el cliente final no cambia nada: sigue usando WhatsApp.","textPreview":"Para el cliente final no cambia nada: sigue usando WhatsApp.","textChars":60,"textLines":1,"bbox":[212,514,856,40]}
+{"kind":"textbox","id":"sh/4zidonyd","slide":4,"text":"Postres Beinetti · Product brief WhatsApp","textPreview":"Postres Beinetti · Product brief WhatsApp","textChars":41,"textLines":1,"bbox":[68,676,470,18]}
+{"kind":"textbox","id":"sh/xkf6dcbu","slide":4,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[1160,676,54,18]}
+{"kind":"notes","id":"nt/c3x6up","slide":4,"text":""}
+{"kind":"slide","id":"sl/ob2zrh","slide":5,"title":"El MVP ahorra tiempo sin esperar a Agora POS","textShapes":11}
+{"kind":"textbox","id":"sh/nuxc3ylc","slide":5,"text":"El MVP ahorra tiempo sin esperar a Agora POS","textPreview":"El MVP ahorra tiempo sin esperar a Agora POS","textChars":44,"textLines":1,"bbox":[68,44,1060,58]}
+{"kind":"textbox","id":"sh/gbq1oryt","slide":5,"text":"Primero se ordena WhatsApp. Después se integra más profundo.","textPreview":"Primero se ordena WhatsApp. Después se integra más profundo.","textChars":60,"textLines":1,"bbox":[68,112,980,34]}
+{"kind":"shape","id":"sh/5wjudg7a","slide":5,"bbox":[68,164,1144,2]}
+{"kind":"shape","id":"sh/yhgn29gr","slide":5,"bbox":[92,242,330,250]}
+{"kind":"shape","id":"sh/n29gr2p8","slide":5,"bbox":[92,242,8,250]}
+{"kind":"textbox","id":"sh/gn29gr2p","slide":5,"text":"Incluye","textPreview":"Incluye","textChars":7,"textLines":1,"bbox":[116,262,286,32]}
+{"kind":"textbox","id":"sh/58z25kb6","slide":5,"text":"Twilio, bot de clasificación, flujos principales, FAQs, derivación a humano, base de datos y bandeja básica.","textPreview":"Twilio, bot de clasificación, flujos principales, FAQs, derivación a humano, base de datos y bandeja básica.","textChars":108,"textLines":1,"bbox":[116,306,286,170]}
+{"kind":"shape","id":"sh/ytsvu9kn","slide":5,"bbox":[476,242,330,250]}
+{"kind":"shape","id":"sh/neloj2t8","slide":5,"bbox":[476,242,8,250]}
+{"kind":"textbox","id":"sh/nap4r65w","slide":5,"text":"No incluye todavía","textPreview":"No incluye todavía","textChars":18,"textLines":1,"bbox":[500,262,286,32]}
+{"kind":"textbox","id":"sh/upwb2hwf","slide":5,"text":"Integración completa con Agora, voz, CRM avanzado, campañas de marketing o presupuestos complejos automáticos.","textPreview":"Integración completa con Agora, voz, CRM avanzado, campañas de marketing o presupuestos complejos automáticos.","textChars":110,"textLines":1,"bbox":[500,306,286,170]}
+{"kind":"shape","id":"sh/5gbq1ory","slide":5,"bbox":[860,242,330,250]}
+{"kind":"shape","id":"sh/cvixczed","slide":5,"bbox":[860,242,8,250]}
+{"kind":"textbox","id":"sh/nyd0z610","slide":5,"text":"Resultado","textPreview":"Resultado","textChars":9,"textLines":1,"bbox":[884,262,286,32]}
+{"kind":"textbox","id":"sh/udg7adsj","slide":5,"text":"WhatsApp pasa de bandeja desordenada a canal filtrado, medible y preparado para crecer.","textPreview":"WhatsApp pasa de bandeja desordenada a canal filtrado, medible y preparado para crecer.","textChars":87,"textLines":1,"bbox":[884,306,286,170]}
+{"kind":"textbox","id":"sh/54zidony","slide":5,"text":"El MVP controla el riesgo: resuelve lo urgente y deja lista la base técnica.","textPreview":"El MVP controla el riesgo: resuelve lo urgente y deja lista la base técnica.","textChars":76,"textLines":1,"bbox":[156,548,968,38]}
+{"kind":"textbox","id":"sh/cj6tovah","slide":5,"text":"Postres Beinetti · Product brief WhatsApp","textPreview":"Postres Beinetti · Product brief WhatsApp","textChars":41,"textLines":1,"bbox":[68,676,470,18]}
+{"kind":"textbox","id":"sh/judg7ads","slide":5,"text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[1160,676,54,18]}
+{"kind":"notes","id":"nt/ob2zrh","slide":5,"text":""}
+{"kind":"slide","id":"sl/727b7v","slide":6,"title":"R1 convierte mensajes en casos ordenados","textShapes":10}
+{"kind":"textbox","id":"sh/5wjudg7a","slide":6,"text":"R1 convierte mensajes en casos ordenados","textPreview":"R1 convierte mensajes en casos ordenados","textChars":40,"textLines":1,"bbox":[68,44,1060,58]}
+{"kind":"textbox","id":"sh/y90je9cv","slide":6,"text":"Release 1 es el MVP operativo para reducir carga manual.","textPreview":"Release 1 es el MVP operativo para reducir carga manual.","textChars":56,"textLines":1,"bbox":[68,112,980,34]}
+{"kind":"shape","id":"sh/nuxc3ylc","slide":6,"bbox":[68,164,1144,2]}
+{"kind":"shape","id":"sh/gn29gr2p","slide":6,"bbox":[154,233,12,12]}
+{"kind":"textbox","id":"sh/58z25kb6","slide":6,"text":"Clasificación inicial: normal, especial, restaurante, FAQ o humano.","textPreview":"Clasificación inicial: normal, especial, restaurante, FAQ o humano.","textChars":67,"textLines":1,"bbox":[182,226,932,28]}
+{"kind":"shape","id":"sh/yhgn29gr","slide":6,"bbox":[154,291,12,12]}
+{"kind":"textbox","id":"sh/n29gr2p8","slide":6,"text":"Pedido normal: envio a tienda online/Agora.","textPreview":"Pedido normal: envio a tienda online/Agora.","textChars":43,"textLines":1,"bbox":[182,284,932,28]}
+{"kind":"shape","id":"sh/czed8v6p","slide":6,"bbox":[154,349,12,12]}
+{"kind":"textbox","id":"sh/5kb6xkf6","slide":6,"text":"Tarta especial: fecha, tienda, personas, sabor, temática e imagen.","textPreview":"Tarta especial: fecha, tienda, personas, sabor, temática e imagen.","textChars":66,"textLines":1,"bbox":[182,342,932,28]}
+{"kind":"shape","id":"sh/x4nap4r6","slide":6,"bbox":[154,407,12,12]}
+{"kind":"textbox","id":"sh/8jqh0fep","slide":6,"text":"Restaurante: pedido estructurado por email o panel básico.","textPreview":"Restaurante: pedido estructurado por email o panel básico.","textChars":58,"textLines":1,"bbox":[182,400,932,28]}
+{"kind":"shape","id":"sh/fyxobm58","slide":6,"bbox":[154,465,12,12]}
+{"kind":"textbox","id":"sh/qd4vmtwr","slide":6,"text":"FAQ: horarios, ubicaciones, recogidas y alérgenos.","textPreview":"FAQ: horarios, ubicaciones, recogidas y alérgenos.","textChars":50,"textLines":1,"bbox":[182,458,932,28]}
+{"kind":"shape","id":"sh/xczed8v6","slide":6,"bbox":[154,523,12,12]}
+{"kind":"textbox","id":"sh/8v6psfil","slide":6,"text":"Bandeja básica: nuevo, pendiente y revisado.","textPreview":"Bandeja básica: nuevo, pendiente y revisado.","textChars":44,"textLines":1,"bbox":[182,516,932,28]}
+{"kind":"textbox","id":"sh/fa9w3m94","slide":6,"text":"Postres Beinetti · Product brief WhatsApp","textPreview":"Postres Beinetti · Product brief WhatsApp","textChars":41,"textLines":1,"bbox":[68,676,470,18]}
+{"kind":"textbox","id":"sh/qpg3ex0n","slide":6,"text":"06","textPreview":"06","textChars":2,"textLines":1,"bbox":[1160,676,54,18]}
+{"kind":"notes","id":"nt/727b7v","slide":6,"text":""}
+{"kind":"slide","id":"sl/kr9ikp","slide":7,"title":"R2 conecta mejor WhatsApp con operación interna","textShapes":11}
+{"kind":"textbox","id":"sh/i5sneloj","slide":7,"text":"R2 conecta mejor WhatsApp con operación interna","textPreview":"R2 conecta mejor WhatsApp con operación interna","textChars":47,"textLines":1,"bbox":[68,44,1060,58]}
+{"kind":"textbox","id":"sh/pwb2hwfy","slide":7,"text":"La segunda fase depende de aprendizaje real y disponibilidad de API.","textPreview":"La segunda fase depende de aprendizaje real y disponibilidad de API.","textChars":68,"textLines":1,"bbox":[68,112,980,34]}
+{"kind":"shape","id":"sh/0bi9s36h","slide":7,"bbox":[68,164,1144,2]}
+{"kind":"shape","id":"sh/7y1kre1w","slide":7,"bbox":[94,264,336,220]}
+{"kind":"shape","id":"sh/ed8v6psf","slide":7,"bbox":[94,264,8,220]}
+{"kind":"textbox","id":"sh/p4r65wju","slide":7,"text":"Panel","textPreview":"Panel","textChars":5,"textLines":1,"bbox":[118,284,292,32]}
+{"kind":"textbox","id":"sh/wjudg7ad","slide":7,"text":"Catálogo editable, estados completos y exportación diaria para obrador.","textPreview":"Catálogo editable, estados completos y exportación diaria para obrador.","textChars":71,"textLines":1,"bbox":[118,328,292,140]}
+{"kind":"shape","id":"sh/72x4nap4","slide":7,"bbox":[476,264,336,220]}
+{"kind":"shape","id":"sh/ih4byhgn","slide":7,"bbox":[476,264,8,220]}
+{"kind":"textbox","id":"sh/032lszqt","slide":7,"text":"Integración","textPreview":"Integración","textChars":11,"textLines":1,"bbox":[500,284,292,32]}
+{"kind":"textbox","id":"sh/tovahoza","slide":7,"text":"Conexión con Agora POS cuando exista documentación/API utilizable.","textPreview":"Conexión con Agora POS cuando exista documentación/API utilizable.","textChars":66,"textLines":1,"bbox":[500,328,292,140]}
+{"kind":"shape","id":"sh/ixczed8v","slide":7,"bbox":[858,264,336,220]}
+{"kind":"shape","id":"sh/bi9s36hc","slide":7,"bbox":[858,264,8,220]}
+{"kind":"textbox","id":"sh/0fepkzup","slide":7,"text":"Inteligencia","textPreview":"Inteligencia","textChars":12,"textLines":1,"bbox":[882,284,292,32]}
+{"kind":"textbox","id":"sh/p0bi9s36","slide":7,"text":"Mejor extracción de datos, resumen automático, multiidioma y preparación para voz.","textPreview":"Mejor extracción de datos, resumen automático, multiidioma y preparación para voz.","textChars":82,"textLines":1,"bbox":[882,328,292,140]}
+{"kind":"textbox","id":"sh/i9s36hcr","slide":7,"text":"R2 no se promete a ciegas: se presupuesta mejor cuando R1 genere datos y Agora confirme su API.","textPreview":"R2 no se promete a ciegas: se presupuesta mejor cuando R1 genere datos y Agora confirme su API.","textChars":95,"textLines":1,"bbox":[164,548,950,38]}
+{"kind":"textbox","id":"sh/bulwval8","slide":7,"text":"Postres Beinetti · Product brief WhatsApp","textPreview":"Postres Beinetti · Product brief WhatsApp","textChars":41,"textLines":1,"bbox":[68,676,470,18]}
+{"kind":"textbox","id":"sh/0je9cvix","slide":7,"text":"07","textPreview":"07","textChars":2,"textLines":1,"bbox":[1160,676,54,18]}
+{"kind":"notes","id":"nt/kr9ikp","slide":7,"text":""}
+{"kind":"slide","id":"sl/hi9g09","slide":8,"title":"El stack elegido es profesional y escalable","textShapes":19}
+{"kind":"textbox","id":"sh/ed8bat47","slide":8,"text":"El stack elegido es profesional y escalable","textPreview":"El stack elegido es profesional y escalable","textChars":43,"textLines":1,"bbox":[68,44,1060,58]}
+{"kind":"textbox","id":"sh/l0rqd4vm","slide":8,"text":"Suficiente para el MVP, preparado para integraciones y crecimiento.","textPreview":"Suficiente para el MVP, preparado para integraciones y crecimiento.","textChars":67,"textLines":1,"bbox":[68,112,980,34]}
+{"kind":"shape","id":"sh/wfyxobm5","slide":8,"bbox":[68,164,1144,2]}
+{"kind":"shape","id":"sh/36hcrmhk","slide":8,"bbox":[100,228,1080,58]}
+{"kind":"textbox","id":"sh/eloj2t83","slide":8,"text":"WhatsApp","textPreview":"WhatsApp","textChars":8,"textLines":1,"bbox":[130,244,180,22]}
+{"kind":"textbox","id":"sh/lc7u54zi","slide":8,"text":"Twilio API","textPreview":"Twilio API","textChars":10,"textLines":1,"bbox":[358,243,300,24]}
+{"kind":"textbox","id":"sh/wra5gbq1","slide":8,"text":"Conexión rápida y estable","textPreview":"Conexión rápida y estable","textChars":25,"textLines":1,"bbox":[720,243,410,24]}
+{"kind":"shape","id":"sh/7adsji5s","slide":8,"bbox":[100,300,1080,58]}
+{"kind":"textbox","id":"sh/epkzupwb","slide":8,"text":"Backend","textPreview":"Backend","textChars":7,"textLines":1,"bbox":[130,316,180,22]}
+{"kind":"textbox","id":"sh/8jqh0fep","slide":8,"text":"NestJS + TypeScript","textPreview":"NestJS + TypeScript","textChars":19,"textLines":1,"bbox":[358,315,300,24]}
+{"kind":"textbox","id":"sh/x4nap4r6","slide":8,"text":"Arquitectura modular para crecer","textPreview":"Arquitectura modular para crecer","textChars":32,"textLines":1,"bbox":[720,315,410,24]}
+{"kind":"shape","id":"sh/qd4vmtwr","slide":8,"bbox":[100,372,1080,58]}
+{"kind":"textbox","id":"sh/fyxobm58","slide":8,"text":"Datos","textPreview":"Datos","textChars":5,"textLines":1,"bbox":[130,388,180,22]}
+{"kind":"textbox","id":"sh/8v6psfil","slide":8,"text":"PostgreSQL + Prisma","textPreview":"PostgreSQL + Prisma","textChars":19,"textLines":1,"bbox":[358,387,300,24]}
+{"kind":"textbox","id":"sh/xczed8v6","slide":8,"text":"Pedidos, clientes, estados y trazabilidad","textPreview":"Pedidos, clientes, estados y trazabilidad","textChars":41,"textLines":1,"bbox":[720,387,410,24]}
+{"kind":"shape","id":"sh/qpg3ex0n","slide":8,"bbox":[100,444,1080,58]}
+{"kind":"textbox","id":"sh/fa9w3m94","slide":8,"text":"Panel","textPreview":"Panel","textChars":5,"textLines":1,"bbox":[130,460,180,22]}
+{"kind":"textbox","id":"sh/8z25kb6x","slide":8,"text":"Next.js","textPreview":"Next.js","textChars":7,"textLines":1,"bbox":[358,459,300,24]}
+{"kind":"textbox","id":"sh/1gvy90je","slide":8,"text":"Bandeja interna y futura operación","textPreview":"Bandeja interna y futura operación","textChars":34,"textLines":1,"bbox":[720,459,410,24]}
+{"kind":"shape","id":"sh/loj2t83i","slide":8,"bbox":[100,516,1080,58]}
+{"kind":"textbox","id":"sh/w3m94fu1","slide":8,"text":"IA opcional","textPreview":"IA opcional","textChars":11,"textLines":1,"bbox":[130,532,180,22]}
+{"kind":"textbox","id":"sh/3itgfmlk","slide":8,"text":"OpenAI API","textPreview":"OpenAI API","textChars":10,"textLines":1,"bbox":[358,531,300,24]}
+{"kind":"textbox","id":"sh/ex0nuxc3","slide":8,"text":"Clasificar, resumir y extraer datos","textPreview":"Clasificar, resumir y extraer datos","textChars":35,"textLines":1,"bbox":[720,531,410,24]}
+{"kind":"textbox","id":"sh/lwval87e","slide":8,"text":"Postres Beinetti · Product brief WhatsApp","textPreview":"Postres Beinetti · Product brief WhatsApp","textChars":41,"textLines":1,"bbox":[68,676,470,18]}
+{"kind":"textbox","id":"sh/wb2hwfyx","slide":8,"text":"08","textPreview":"08","textChars":2,"textLines":1,"bbox":[1160,676,54,18]}
+{"kind":"notes","id":"nt/hi9g09","slide":8,"text":""}
+{"kind":"slide","id":"sl/mnzvnh","slide":9,"title":"El MVP debe medirse por ahorro y calidad","textShapes":14}
+{"kind":"textbox","id":"sh/58z25kb6","slide":9,"text":"El MVP debe medirse por ahorro y calidad","textPreview":"El MVP debe medirse por ahorro y calidad","textChars":40,"textLines":1,"bbox":[68,44,1060,58]}
+{"kind":"textbox","id":"sh/yhgn29gr","slide":9,"text":"OKR propuesto para validar si la automatización funciona.","textPreview":"OKR propuesto para validar si la automatización funciona.","textChars":57,"textLines":1,"bbox":[68,112,980,34]}
+{"kind":"shape","id":"sh/n29gr2p8","slide":9,"bbox":[68,164,1144,2]}
+{"kind":"shape","id":"sh/gbq1oryt","slide":9,"bbox":[96,242,420,260]}
+{"kind":"shape","id":"sh/5wjudg7a","slide":9,"bbox":[96,242,8,260]}
+{"kind":"textbox","id":"sh/y90je9cv","slide":9,"text":"Objetivo","textPreview":"Objetivo","textChars":8,"textLines":1,"bbox":[120,262,376,32]}
+{"kind":"textbox","id":"sh/nuxc3ylc","slide":9,"text":"Reducir el tiempo manual dedicado a WhatsApp y mejorar la calidad de los pedidos recibidos.","textPreview":"Reducir el tiempo manual dedicado a WhatsApp y mejorar la calidad de los pedidos recibidos.","textChars":91,"textLines":1,"bbox":[120,306,376,180]}
+{"kind":"shape","id":"sh/cbulwval","slide":9,"bbox":[586,242,250,118]}
+{"kind":"textbox","id":"sh/5sneloj2","slide":9,"text":"30-50%","textPreview":"30-50%","textChars":6,"textLines":1,"bbox":[604,276,214,58]}
+{"kind":"textbox","id":"sh/tcj6tova","slide":9,"text":"menos conversaciones repetitivas manuales","textPreview":"menos conversaciones repetitivas manuales","textChars":41,"textLines":1,"bbox":[612,348,198,42]}
+{"kind":"shape","id":"sh/0rqd4vmt","slide":9,"bbox":[884,242,250,118]}
+{"kind":"textbox","id":"sh/b6xkf6dc","slide":9,"text":"70%","textPreview":"70%","textChars":3,"textLines":1,"bbox":[902,276,214,58]}
+{"kind":"textbox","id":"sh/il0rqd4v","slide":9,"text":"pedidos especiales con datos mínimos","textPreview":"pedidos especiales con datos mínimos","textChars":36,"textLines":1,"bbox":[910,348,198,42]}
+{"kind":"shape","id":"sh/t47y1kre","slide":9,"bbox":[586,398,250,118]}
+{"kind":"textbox","id":"sh/0je9cvix","slide":9,"text":"80%","textPreview":"80%","textChars":3,"textLines":1,"bbox":[604,432,214,58]}
+{"kind":"textbox","id":"sh/byhgn29g","slide":9,"text":"clasificacion correcta de conversaciones","textPreview":"clasificacion correcta de conversaciones","textChars":40,"textLines":1,"bbox":[612,504,198,42]}
+{"kind":"shape","id":"sh/idonyd0z","slide":9,"bbox":[884,398,250,118]}
+{"kind":"textbox","id":"sh/p0bi9s36","slide":9,"text":"100%","textPreview":"100%","textChars":4,"textLines":1,"bbox":[902,432,214,58]}
+{"kind":"textbox","id":"sh/0fepkzup","slide":9,"text":"trazabilidad de pedidos entrantes","textPreview":"trazabilidad de pedidos entrantes","textChars":33,"textLines":1,"bbox":[910,504,198,42]}
+{"kind":"textbox","id":"sh/cbulwval","slide":9,"text":"Postres Beinetti · Product brief WhatsApp","textPreview":"Postres Beinetti · Product brief WhatsApp","textChars":41,"textLines":1,"bbox":[68,676,470,18]}
+{"kind":"textbox","id":"sh/5sneloj2","slide":9,"text":"09","textPreview":"09","textChars":2,"textLines":1,"bbox":[1160,676,54,18]}
+{"kind":"notes","id":"nt/mnzvnh","slide":9,"text":""}
+{"kind":"slide","id":"sl/6xbd0x","slide":10,"title":"Los KPIs muestran si el sistema está quitando carga","textShapes":16}
+{"kind":"textbox","id":"sh/idonyd0z","slide":10,"text":"Los KPIs muestran si el sistema está quitando carga","textPreview":"Los KPIs muestran si el sistema está quitando carga","textChars":51,"textLines":1,"bbox":[68,44,1060,58]}
+{"kind":"textbox","id":"sh/t47y1kre","slide":10,"text":"No basta con que el bot responda: debe mejorar la operación.","textPreview":"No basta con que el bot responda: debe mejorar la operación.","textChars":60,"textLines":1,"bbox":[68,112,980,34]}
+{"kind":"shape","id":"sh/0je9cvix","slide":10,"bbox":[68,164,1144,2]}
+{"kind":"shape","id":"sh/b6xkf6dc","slide":10,"bbox":[90,244,340,122]}
+{"kind":"shape","id":"sh/il0rqd4v","slide":10,"bbox":[90,244,8,122]}
+{"kind":"textbox","id":"sh/tcj6tova","slide":10,"text":"Conversaciones gestionadas","textPreview":"Conversaciones gestionadas","textChars":26,"textLines":1,"bbox":[114,264,296,32]}
+{"kind":"textbox","id":"sh/0rqd4vmt","slide":10,"text":"volumen real que pasa por el sistema","textPreview":"volumen real que pasa por el sistema","textChars":36,"textLines":1,"bbox":[114,308,296,42]}
+{"kind":"shape","id":"sh/bi9s36hc","slide":10,"bbox":[476,244,340,122]}
+{"kind":"shape","id":"sh/ixczed8v","slide":10,"bbox":[476,244,8,122]}
+{"kind":"textbox","id":"sh/s72x4nap","slide":10,"text":"Derivación a humano","textPreview":"Derivación a humano","textChars":19,"textLines":1,"bbox":[500,264,296,32]}
+{"kind":"textbox","id":"sh/lszqtcj6","slide":10,"text":"casos que aún requieren atención","textPreview":"casos que aún requieren atención","textChars":32,"textLines":1,"bbox":[500,308,296,42]}
+{"kind":"shape","id":"sh/a5gbq1or","slide":10,"bbox":[862,244,340,122]}
+{"kind":"shape","id":"sh/3m94fu18","slide":10,"bbox":[862,244,8,122]}
+{"kind":"textbox","id":"sh/sji5snel","slide":10,"text":"Pedidos completos","textPreview":"Pedidos completos","textChars":17,"textLines":1,"bbox":[886,264,296,32]}
+{"kind":"textbox","id":"sh/h4byhgn2","slide":10,"text":"calidad de los datos recogidos","textPreview":"calidad de los datos recogidos","textChars":30,"textLines":1,"bbox":[886,308,296,42]}
+{"kind":"shape","id":"sh/adsji5sn","slide":10,"bbox":[90,402,340,122]}
+{"kind":"shape","id":"sh/3ylc7u54","slide":10,"bbox":[90,402,8,122]}
+{"kind":"textbox","id":"sh/svu9knih","slide":10,"text":"Primera respuesta","textPreview":"Primera respuesta","textChars":17,"textLines":1,"bbox":[114,422,296,32]}
+{"kind":"textbox","id":"sh/hgn29gr2","slide":10,"text":"velocidad percibida por cliente","textPreview":"velocidad percibida por cliente","textChars":31,"textLines":1,"bbox":[114,466,296,42]}
+{"kind":"shape","id":"sh/l87ed8ba","slide":10,"bbox":[476,402,340,122]}
+{"kind":"shape","id":"sh/sneloj2t","slide":10,"bbox":[476,402,8,122]}
+{"kind":"textbox","id":"sh/32lszqtc","slide":10,"text":"Errores detectados","textPreview":"Errores detectados","textChars":18,"textLines":1,"bbox":[500,422,296,32]}
+{"kind":"textbox","id":"sh/ahoza1gv","slide":10,"text":"datos faltantes o mal estructurados","textPreview":"datos faltantes o mal estructurados","textChars":35,"textLines":1,"bbox":[500,466,296,42]}
+{"kind":"shape","id":"sh/lkjm1cfa","slide":10,"bbox":[862,402,340,122]}
+{"kind":"shape","id":"sh/szqtcj6t","slide":10,"bbox":[862,402,8,122]}
+{"kind":"textbox","id":"sh/3ex0nuxc","slide":10,"text":"Ahorro semanal","textPreview":"Ahorro semanal","textChars":14,"textLines":1,"bbox":[886,422,296,32]}
+{"kind":"textbox","id":"sh/at47y1kr","slide":10,"text":"tiempo estimado liberado del equipo","textPreview":"tiempo estimado liberado del equipo","textChars":35,"textLines":1,"bbox":[886,466,296,42]}
+{"kind":"textbox","id":"sh/loj2t83i","slide":10,"text":"Postres Beinetti · Product brief WhatsApp","textPreview":"Postres Beinetti · Product brief WhatsApp","textChars":41,"textLines":1,"bbox":[68,676,470,18]}
+{"kind":"textbox","id":"sh/w3m94fu1","slide":10,"text":"10","textPreview":"10","textChars":2,"textLines":1,"bbox":[1160,676,54,18]}
+{"kind":"notes","id":"nt/6xbd0x","slide":10,"text":""}
+{"kind":"slide","id":"sl/ri5tmy","slide":11,"title":"La hoja de ruta evita prometer integraciones a ciegas","textShapes":16}
+{"kind":"textbox","id":"sh/8z25kb6x","slide":11,"text":"La hoja de ruta evita prometer integraciones a ciegas","textPreview":"La hoja de ruta evita prometer integraciones a ciegas","textChars":53,"textLines":1,"bbox":[68,44,1060,58]}
+{"kind":"textbox","id":"sh/je9cvixc","slide":11,"text":"Se avanza por capas, validando cada paso.","textPreview":"Se avanza por capas, validando cada paso.","textChars":41,"textLines":1,"bbox":[68,112,980,34]}
+{"kind":"shape","id":"sh/qtcj6tov","slide":11,"bbox":[68,164,1144,2]}
+{"kind":"shape","id":"sh/xs72x4na","slide":11,"bbox":[92,260,250,250]}
+{"kind":"shape","id":"sh/87ed8bat","slide":11,"bbox":[116,288,52,52]}
+{"kind":"textbox","id":"sh/fmlkjm1c","slide":11,"text":"R1","textPreview":"R1","textChars":2,"textLines":1,"bbox":[116,301,52,26]}
+{"kind":"textbox","id":"sh/q1orytsv","slide":11,"text":"Ordenar WhatsApp","textPreview":"Ordenar WhatsApp","textChars":16,"textLines":1,"bbox":[116,368,200,62]}
+{"kind":"textbox","id":"sh/x4nap4r6","slide":11,"text":"Twilio, bot, FAQs, pedidos y bandeja básica","textPreview":"Twilio, bot, FAQs, pedidos y bandeja básica","textChars":43,"textLines":1,"bbox":[116,448,196,48]}
+{"kind":"shape","id":"sh/8jqh0fep","slide":11,"bbox":[378,260,250,250]}
+{"kind":"shape","id":"sh/mp0bi9s3","slide":11,"bbox":[402,288,52,52]}
+{"kind":"textbox","id":"sh/bat47y1k","slide":11,"text":"R2","textPreview":"R2","textChars":2,"textLines":1,"bbox":[402,301,52,26]}
+{"kind":"textbox","id":"sh/4vmtwra5","slide":11,"text":"Optimizar operación","textPreview":"Optimizar operación","textChars":19,"textLines":1,"bbox":[402,368,200,62]}
+{"kind":"textbox","id":"sh/tgfmlkjm","slide":11,"text":"Panel mejorado, estados, catálogo y reporting","textPreview":"Panel mejorado, estados, catálogo y reporting","textChars":45,"textLines":1,"bbox":[402,448,196,48]}
+{"kind":"shape","id":"sh/m1cfa9w3","slide":11,"bbox":[664,260,250,250]}
+{"kind":"shape","id":"sh/bm58z25k","slide":11,"bbox":[688,288,52,52]}
+{"kind":"textbox","id":"sh/47y1kre1","slide":11,"text":"R3","textPreview":"R3","textChars":2,"textLines":1,"bbox":[688,301,52,26]}
+{"kind":"textbox","id":"sh/tsvu9kni","slide":11,"text":"Integrar Agora","textPreview":"Integrar Agora","textChars":14,"textLines":1,"bbox":[688,368,200,62]}
+{"kind":"textbox","id":"sh/m58z25kb","slide":11,"text":"Pedidos y producción cuando la API esté lista","textPreview":"Pedidos y producción cuando la API esté lista","textChars":45,"textLines":1,"bbox":[688,448,196,48]}
+{"kind":"shape","id":"sh/bq1oryts","slide":11,"bbox":[950,260,250,250]}
+{"kind":"shape","id":"sh/7mp0bi9s","slide":11,"bbox":[974,288,52,52]}
+{"kind":"textbox","id":"sh/e1w7mp0b","slide":11,"text":"R4","textPreview":"R4","textChars":2,"textLines":1,"bbox":[974,301,52,26]}
+{"kind":"textbox","id":"sh/psfil0rq","slide":11,"text":"IA y voz","textPreview":"IA y voz","textChars":8,"textLines":1,"bbox":[974,368,200,62]}
+{"kind":"textbox","id":"sh/w7mp0bi9","slide":11,"text":"Multiidioma, extracción avanzada y llamadas","textPreview":"Multiidioma, extracción avanzada y llamadas","textChars":43,"textLines":1,"bbox":[974,448,196,48]}
+{"kind":"textbox","id":"sh/7adsji5s","slide":11,"text":"Postres Beinetti · Product brief WhatsApp","textPreview":"Postres Beinetti · Product brief WhatsApp","textChars":41,"textLines":1,"bbox":[68,676,470,18]}
+{"kind":"textbox","id":"sh/epkzupwb","slide":11,"text":"11","textPreview":"11","textChars":2,"textLines":1,"bbox":[1160,676,54,18]}
+{"kind":"notes","id":"nt/ri5tmy","slide":11,"text":""}
+{"kind":"slide","id":"sl/715o96","slide":12,"title":"Presupuesto para arrancar con R1","textShapes":14}
+{"kind":"textbox","id":"sh/b2hwfyxo","slide":12,"text":"Presupuesto para arrancar con R1","textPreview":"Presupuesto para arrancar con R1","textChars":32,"textLines":1,"bbox":[68,44,1060,58]}
+{"kind":"textbox","id":"sh/4nap4r65","slide":12,"text":"Precio cerrado para el MVP, con mantenimiento y costes externos separados.","textPreview":"Precio cerrado para el MVP, con mantenimiento y costes externos separados.","textChars":74,"textLines":1,"bbox":[68,112,980,34]}
+{"kind":"shape","id":"sh/t83itgfm","slide":12,"bbox":[68,164,1144,2]}
+{"kind":"shape","id":"sh/m58z25kb","slide":12,"bbox":[102,248,310,184]}
+{"kind":"textbox","id":"sh/bq1oryts","slide":12,"text":"3.500 EUR","textPreview":"3.500 EUR","textChars":9,"textLines":1,"bbox":[128,302,258,52]}
+{"kind":"textbox","id":"sh/4byhgn29","slide":12,"text":"Desarrollo R1 / MVP","textPreview":"Desarrollo R1 / MVP","textChars":19,"textLines":1,"bbox":[128,364,258,28]}
+{"kind":"shape","id":"sh/twra5gbq","slide":12,"bbox":[486,248,310,184]}
+{"kind":"textbox","id":"sh/m1cfa9w3","slide":12,"text":"250","textPreview":"250","textChars":3,"textLines":1,"bbox":[512,284,258,46]}
+{"kind":"textbox","id":"sh/bm58z25k","slide":12,"text":"EUR/mes","textPreview":"EUR/mes","textChars":7,"textLines":1,"bbox":[512,336,258,38]}
+{"kind":"textbox","id":"sh/val87ed8","slide":12,"text":"Mantenimiento","textPreview":"Mantenimiento","textChars":13,"textLines":1,"bbox":[512,384,258,28]}
+{"kind":"shape","id":"sh/6psfil0r","slide":12,"bbox":[870,248,310,184]}
+{"kind":"textbox","id":"sh/dcbulwva","slide":12,"text":"75-200","textPreview":"75-200","textChars":6,"textLines":1,"bbox":[896,284,258,46]}
+{"kind":"textbox","id":"sh/kre1w7mp","slide":12,"text":"EUR/mes","textPreview":"EUR/mes","textChars":7,"textLines":1,"bbox":[896,336,258,38]}
+{"kind":"textbox","id":"sh/vixczed8","slide":12,"text":"Costes externos estimados","textPreview":"Costes externos estimados","textChars":25,"textLines":1,"bbox":[896,384,258,28]}
+{"kind":"textbox","id":"sh/2x4nap4r","slide":12,"text":"Incluye configuración, bot, flujos principales, base de datos, panel/bandeja básica, despliegue, pruebas, documentación y 2 semanas de ajustes.","textPreview":"Incluye configuración, bot, flujos principales, base de datos, panel/bandeja básica, despliegue, pruebas, documentación y 2 semanas de aj...","textChars":143,"textLines":1,"bbox":[134,500,1012,44]}
+{"kind":"textbox","id":"sh/donyd0z6","slide":12,"text":"Nota fiscal: si aplica Kleinunternehmerregelung en Alemania, se emitiría sin IVA, pendiente de confirmación fiscal.","textPreview":"Nota fiscal: si aplica Kleinunternehmerregelung en Alemania, se emitiría sin IVA, pendiente de confirmación fiscal.","textChars":115,"textLines":1,"bbox":[190,592,900,24]}
+{"kind":"textbox","id":"sh/k3q5o7qp","slide":12,"text":"Postres Beinetti · Product brief WhatsApp","textPreview":"Postres Beinetti · Product brief WhatsApp","textChars":41,"textLines":1,"bbox":[68,676,470,18]}
+{"kind":"textbox","id":"sh/vu9knih4","slide":12,"text":"12","textPreview":"12","textChars":2,"textLines":1,"bbox":[1160,676,54,18]}
+{"kind":"notes","id":"nt/715o96","slide":12,"text":""}
