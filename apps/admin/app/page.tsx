@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { simulateWhatsAppMessage } from './actions';
 import { apiFetch } from './api';
 import { ConnectionState } from './connection-state';
 import { Company, ConversationListItem, MetricsOverview } from './types';
@@ -18,8 +19,9 @@ export default async function HomePage({ searchParams }: PageProps) {
   }
 
   const selectedCompany = params.companyId ?? companies[0]?.id;
+  const selectedCompanyRecord = companies.find((company) => company.id === selectedCompany);
 
-  if (!selectedCompany) {
+  if (!selectedCompany || !selectedCompanyRecord) {
     return (
       <main className="shell">
         <p>No hay empresas configuradas. Ejecuta `pnpm db:seed`.</p>
@@ -110,13 +112,52 @@ export default async function HomePage({ searchParams }: PageProps) {
               <p>{conversation.messages[0]?.body ?? conversation.summary ?? 'Sin mensajes'}</p>
             </Link>
           ))}
+
+          {conversations.length === 0 ? (
+            <div className="empty-list">
+              <strong>Sin conversaciones todavía</strong>
+              <span className="muted">Esperando actividad entrante.</span>
+            </div>
+          ) : null}
         </aside>
 
         <section className="panel">
-          <h2>Operación</h2>
-          <p className="muted">
-            Selecciona una conversación para revisar mensajes, datos recogidos y cambiar estado.
-          </p>
+          <h2>Simular WhatsApp</h2>
+          <form className="simulator" action={simulateWhatsAppMessage}>
+            <input type="hidden" name="companySlug" value={selectedCompanyRecord.slug} />
+            <label>
+              Teléfono
+              <input name="phone" defaultValue="+34600000000" />
+            </label>
+            <label>
+              Mensaje
+              <textarea
+                name="body"
+                rows={4}
+                defaultValue="Hola, quiero una tarta de comunión para 20 personas"
+                required
+              />
+            </label>
+            <div className="quick-messages">
+              <button type="submit" name="body" value="Hola, quiero hacer un pedido">
+                Pedido normal
+              </button>
+              <button
+                type="submit"
+                name="body"
+                value="Hola, quiero una tarta de comunión para 20 personas"
+              >
+                Tarta especial
+              </button>
+              <button type="submit" name="body" value="Soy un restaurante y quiero hacer un pedido">
+                Restaurante
+              </button>
+              <button type="submit" name="body" value="¿Cuál es vuestro horario?">
+                FAQ
+              </button>
+            </div>
+            <button type="submit">Enviar mensaje</button>
+          </form>
         </section>
       </section>
     </main>

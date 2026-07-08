@@ -61,10 +61,6 @@ export class FlowService {
   ): Promise<ConversationIntent> {
     const normalized = this.normalize(body);
 
-    if (this.matchesAny(normalized, config.routingKeywords.human_support ?? [])) {
-      return ConversationIntent.human_support;
-    }
-
     if (this.matchesAny(normalized, config.routingKeywords.restaurant_order ?? [])) {
       return ConversationIntent.restaurant_order;
     }
@@ -80,6 +76,10 @@ export class FlowService {
     const faq = await this.findFaqAnswer(companyId, normalized, config);
     if (faq) {
       return ConversationIntent.faq;
+    }
+
+    if (this.matchesAny(normalized, config.routingKeywords.human_support ?? [])) {
+      return ConversationIntent.human_support;
     }
 
     return ConversationIntent.unknown;

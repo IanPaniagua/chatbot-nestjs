@@ -34,6 +34,16 @@ describe('FlowService', () => {
     ).resolves.toBe(ConversationIntent.special_order);
   });
 
+  it('keeps special cake requests with servings out of human handoff', async () => {
+    await expect(
+      service.classify(
+        'company-1',
+        'Hola, quiero una tarta de comunion para 20 personas',
+        testCompanyConfig,
+      ),
+    ).resolves.toBe(ConversationIntent.special_order);
+  });
+
   it('classifies restaurant requests from configurable keywords', async () => {
     await expect(
       service.classify('company-1', 'Necesito hacer un pedido por mayor para restaurante', testCompanyConfig),

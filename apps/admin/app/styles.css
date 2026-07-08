@@ -115,12 +115,20 @@ button {
 }
 
 select,
+input,
 textarea {
   width: 100%;
   border: 1px solid var(--line);
   border-radius: 6px;
   padding: 10px;
   background: white;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-weight: 700;
 }
 
 button,
@@ -216,6 +224,33 @@ button,
 .note-form {
   margin-top: 18px;
   padding: 14px;
+}
+
+.simulator {
+  display: grid;
+  gap: 14px;
+}
+
+.quick-messages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.quick-messages button {
+  min-height: 34px;
+  background: #fbf8f5;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.empty-list {
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  background: #fbf8f5;
 }
 
 .empty-state {
