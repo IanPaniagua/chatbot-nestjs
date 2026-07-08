@@ -159,7 +159,7 @@ async function upsertCompany(slug: string, name: string, config: CompanyBotConfi
 }
 
 async function main() {
-  await upsertCompany('postres-beinetti', 'Postres Beinetti', beinettiConfig);
+  await upsertCompany('postres-beinetti', 'Postres Beinetti (demo)', beinettiConfig);
   await upsertCompany('demo-website', 'Demo Website', demoConfig);
 }
 
