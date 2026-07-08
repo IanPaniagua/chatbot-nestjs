@@ -18,7 +18,8 @@ export default async function HomePage({ searchParams }: PageProps) {
     return <ConnectionState />;
   }
 
-  const selectedCompany = params.companyId ?? companies[0]?.id;
+  const defaultCompany = companies.find((company) => company.slug === 'postres-beinetti') ?? companies[0];
+  const selectedCompany = params.companyId ?? defaultCompany?.id;
   const selectedCompanyRecord = companies.find((company) => company.id === selectedCompany);
 
   if (!selectedCompany || !selectedCompanyRecord) {
