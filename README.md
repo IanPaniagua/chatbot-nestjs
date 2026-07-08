@@ -31,7 +31,7 @@ Admin: `http://localhost:3000`
 Neon remoto:
 
 ```bash
-cp .env.neon.example .env
+npx -y neonctl env pull
 npm run env:check
 pnpm db:generate
 pnpm db:deploy
@@ -60,6 +60,7 @@ Guía completa: [docs/neon-setup.md](docs/neon-setup.md)
 - `apps/api`: backend NestJS, Prisma, webhooks y motor conversacional.
 - `apps/admin`: panel interno básico para conversaciones.
 - `packages/shared`: tipos compartidos entre API y panel.
+- `.neon`: contexto del proyecto Neon enlazado. No contiene secretos; las credenciales viven en `.env`.
 
 ## Alcance MVP
 
@@ -113,6 +114,8 @@ Comandos verificados en este workspace:
 
 ```bash
 pnpm db:generate
+pnpm db:deploy
+pnpm db:seed
 pnpm build
 npm test
 ```

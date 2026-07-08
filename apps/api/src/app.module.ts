@@ -12,7 +12,11 @@ import { TwilioWebhookModule } from './webhooks/twilio/twilio-webhook.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, validate: validateEnv }),
+    ConfigModule.forRoot({
+      envFilePath: ['.env', '../../.env'],
+      isGlobal: true,
+      validate: validateEnv,
+    }),
     PrismaModule,
     CompaniesModule,
     ConversationsModule,

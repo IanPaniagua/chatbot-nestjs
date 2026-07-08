@@ -8,28 +8,32 @@ Use Neon as the first remote Postgres database for staging/demo and later for Po
 - Staging/demo: Neon Free.
 - Production: Neon Launch or another paid Neon setup billed as an external cost to the client.
 
-## Create The Neon Database
+## Current Project
 
-1. Go to [Neon](https://neon.com/) and create a project.
-2. Suggested project name: `chatbot-platform-staging`.
-3. Region: choose the closest European region available.
-4. Database name: `chatbot`.
-5. Copy the **pooled** connection string if Neon offers one.
-6. Make sure the URL includes `sslmode=require`.
+This workspace is linked through `.neon` to:
 
-Example shape:
+- Neon project: `chatbot-nestjs`
+- Project ID: `jolly-dew-46624700`
+- Branch: `production`
+- Region: `aws-eu-central-1`
+
+The `.neon` file contains project context only, not database passwords.
+
+## Pull Local Environment
 
 ```bash
-postgresql://USER:PASSWORD@ep-xxxx-pooler.REGION.aws.neon.tech/chatbot?sslmode=require&pgbouncer=true
+npx -y neonctl env pull
 ```
 
-## Configure Local `.env`
+This writes Neon-managed variables to `.env`, including `DATABASE_URL`. The `.env` file is ignored by git and must never be committed.
+
+If setting up another machine manually, copy the template first:
 
 ```bash
 cp .env.neon.example .env
 ```
 
-Then edit `.env`:
+Then edit `.env` and set at minimum:
 
 ```bash
 DATABASE_URL="paste-neon-connection-string-here"
@@ -51,6 +55,8 @@ pnpm db:generate
 pnpm db:deploy
 pnpm db:seed
 ```
+
+The Prisma scripts run through `scripts/with-root-env.mjs`, so they read the monorepo root `.env` even though Prisma lives under `apps/api`.
 
 For local development with Docker Postgres, use:
 
