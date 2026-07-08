@@ -1,5 +1,6 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:4000';
-const ADMIN_TOKEN = process.env.ADMIN_SERVER_API_TOKEN ?? 'dev-admin-token-change-me';
+const ADMIN_TOKEN =
+  process.env.ADMIN_SERVER_API_TOKEN ?? process.env.ADMIN_API_TOKEN ?? 'dev-admin-token-change-me';
 
 export async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`${API_BASE_URL}${path}`, {

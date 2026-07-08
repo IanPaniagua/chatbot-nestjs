@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "test": "next build",
+    "dev": "node ../../scripts/with-root-env.mjs next dev",
+    "build": "node ../../scripts/with-root-env.mjs next build",
+    "start": "node ../../scripts/with-root-env.mjs next start",
+    "test": "node ../../scripts/with-root-env.mjs next build",
     "lint": "next lint"
   },
   "dependencies": {
