@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { addInternalNote, updateConversationStatus } from '../../actions';
 import { apiFetch } from '../../api';
+import { ConnectionState } from '../../connection-state';
 import { ConversationDetail } from '../../types';
 
 interface PageProps {
@@ -21,9 +22,15 @@ export default async function ConversationPage({ params, searchParams }: PagePro
     );
   }
 
-  const conversation = await apiFetch<ConversationDetail>(
-    `/conversations/${id}?companyId=${companyId}`,
-  );
+  let conversation: ConversationDetail;
+
+  try {
+    conversation = await apiFetch<ConversationDetail>(
+      `/conversations/${id}?companyId=${companyId}`,
+    );
+  } catch {
+    return <ConnectionState />;
+  }
 
   return (
     <main className="shell">

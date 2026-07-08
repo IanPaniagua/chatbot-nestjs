@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { apiFetch } from './api';
+import { ConnectionState } from './connection-state';
 import { Company, ConversationListItem, MetricsOverview } from './types';
 
 interface PageProps {
@@ -8,7 +9,14 @@ interface PageProps {
 
 export default async function HomePage({ searchParams }: PageProps) {
   const params = (await searchParams) ?? {};
-  const companies = await apiFetch<Company[]>('/companies');
+  let companies: Company[];
+
+  try {
+    companies = await apiFetch<Company[]>('/companies');
+  } catch {
+    return <ConnectionState />;
+  }
+
   const selectedCompany = params.companyId ?? companies[0]?.id;
 
   if (!selectedCompany) {
@@ -23,10 +31,17 @@ export default async function HomePage({ searchParams }: PageProps) {
   if (params.status) query.set('status', params.status);
   if (params.intent) query.set('intent', params.intent);
 
-  const [conversations, metrics] = await Promise.all([
-    apiFetch<ConversationListItem[]>(`/conversations?${query.toString()}`),
-    apiFetch<MetricsOverview>(`/metrics/overview?companyId=${selectedCompany}`),
-  ]);
+  let conversations: ConversationListItem[];
+  let metrics: MetricsOverview;
+
+  try {
+    [conversations, metrics] = await Promise.all([
+      apiFetch<ConversationListItem[]>(`/conversations?${query.toString()}`),
+      apiFetch<MetricsOverview>(`/metrics/overview?companyId=${selectedCompany}`),
+    ]);
+  } catch {
+    return <ConnectionState />;
+  }
 
   return (
     <main className="shell">
