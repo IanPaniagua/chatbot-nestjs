@@ -1,4 +1,5 @@
 import { Body, Controller, Header, Post, Query } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { twiml } from 'twilio';
 import { ConversationsService } from '../../conversations/conversations.service';
 
@@ -12,17 +13,22 @@ interface TwilioWhatsAppPayload {
 
 @Controller('webhooks/twilio')
 export class TwilioWebhookController {
-  constructor(private readonly conversations: ConversationsService) {}
+  constructor(
+    private readonly conversations: ConversationsService,
+    private readonly config: ConfigService,
+  ) {}
 
   @Post('whatsapp')
   @Header('Content-Type', 'text/xml')
   async receiveWhatsApp(
     @Body() body: TwilioWhatsAppPayload,
-    @Query('companySlug') companySlug = 'postres-beinetti',
+    @Query('companySlug') companySlug?: string,
   ) {
+    const resolvedCompanySlug =
+      companySlug || this.config.get<string>('DEFAULT_COMPANY_SLUG') || 'base-whatsapp';
     const from = body.From ?? '';
     const result = await this.conversations.ingestInbound({
-      companySlug,
+      companySlug: resolvedCompanySlug,
       channel: 'whatsapp',
       externalContactId: from,
       from,

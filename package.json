@@ -10,6 +10,7 @@
     "build": "pnpm -r build",
     "test": "node apps/api/node_modules/jest/bin/jest.js --config apps/api/package.json --runInBand",
     "lint": "pnpm -r lint",
+    "simulate:whatsapp": "node scripts/simulate-whatsapp.mjs",
     "env:check": "node scripts/check-env.mjs",
     "db:generate": "pnpm --filter @chatbot/api prisma:generate",
     "db:migrate": "pnpm --filter @chatbot/api prisma:migrate",

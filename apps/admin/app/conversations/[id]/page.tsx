@@ -1,5 +1,10 @@
 import Link from 'next/link';
-import { addInternalNote, updateConversationStatus } from '../../actions';
+import {
+  addInternalNote,
+  resetConversationFlow,
+  sendManualMessage,
+  updateConversationStatus,
+} from '../../actions';
 import { apiFetch } from '../../api';
 import { ConnectionState } from '../../connection-state';
 import { CopyButton } from '../../copy-button';
@@ -63,6 +68,15 @@ export default async function ConversationPage({ params, searchParams }: PagePro
             </button>
           </form>
         </header>
+
+        <form className="inline-action-form" action={resetConversationFlow}>
+          <input type="hidden" name="companyId" value={companyId} />
+          <input type="hidden" name="conversationId" value={conversation.id} />
+          <button className="secondary-button" type="submit">
+            Resetear flujo
+          </button>
+          <span className="muted">Útil cuando una prueba queda enganchada en preguntas anteriores.</span>
+        </form>
 
         <section className="detail-grid">
           <article className="info-box">
@@ -130,6 +144,21 @@ export default async function ConversationPage({ params, searchParams }: PagePro
           </div>
         </section>
 
+        <form className="note-form" action={sendManualMessage}>
+          <h2>Responder al cliente</h2>
+          <input type="hidden" name="companyId" value={companyId} />
+          <input type="hidden" name="conversationId" value={conversation.id} />
+          <textarea
+            name="body"
+            rows={4}
+            placeholder="Escribe una respuesta manual para enviar por WhatsApp"
+            required
+          />
+          <button type="submit" style={{ marginTop: 10 }}>
+            Enviar respuesta
+          </button>
+        </form>
+
         <form className="note-form" action={addInternalNote}>
           <h2>Nota interna</h2>
           <input type="hidden" name="companyId" value={companyId} />
@@ -159,16 +188,26 @@ export default async function ConversationPage({ params, searchParams }: PagePro
 }
 
 const DATA_LABELS: Record<string, string> = {
-  businessName: 'Restaurante',
+  appointmentReason: 'Motivo de la cita',
+  budget: 'Presupuesto',
+  businessName: 'Empresa',
   contactName: 'Contacto',
+  date: 'Fecha',
   deliveryDate: 'Fecha/hora',
   flavor: 'Sabor',
   items: 'Productos y cantidades',
+  need: 'Necesidad',
   notes: 'Observaciones',
+  patientName: 'Paciente',
   pickupDate: 'Fecha de recogida',
   pickupLocation: 'Tienda de recogida',
+  preferredDate: 'Fecha preferida',
+  request: 'Solicitud',
+  service: 'Servicio',
   servings: 'Personas',
   theme: 'Temática',
+  urgency: 'Urgencia',
+  volume: 'Volumen/frecuencia',
 };
 
 function getCollectedDataEntries(data?: Record<string, unknown> | null) {

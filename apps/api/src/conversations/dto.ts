@@ -36,3 +36,12 @@ export class CreateInternalNoteDto {
   @IsString()
   author?: string;
 }
+
+export class SendManualMessageDto {
+  @IsString()
+  body!: string;
+
+  @IsOptional()
+  @IsString()
+  author?: string;
+}

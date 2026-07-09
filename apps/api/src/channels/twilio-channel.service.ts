@@ -19,13 +19,20 @@ export class TwilioChannelService implements ChannelAdapter {
       return {};
     }
 
-    const client = twilio(accountSid, authToken);
-    const result = await client.messages.create({
-      from,
-      to: message.to.startsWith('whatsapp:') ? message.to : `whatsapp:${message.to}`,
-      body: message.body,
-    });
+    try {
+      const client = twilio(accountSid, authToken);
+      const result = await client.messages.create({
+        from,
+        to: message.to.startsWith('whatsapp:') ? message.to : `whatsapp:${message.to}`,
+        body: message.body,
+      });
 
-    return { providerMessageId: result.sid };
+      return { providerMessageId: result.sid };
+    } catch (error) {
+      this.logger.warn(
+        `Twilio outbound message failed: ${error instanceof Error ? error.message : String(error)}`,
+      );
+      return {};
+    }
   }
 }

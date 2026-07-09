@@ -75,7 +75,8 @@ h2 {
 .panel,
 .row,
 .message,
-.note-form {
+.note-form,
+.onboarding-panel {
   background: var(--paper);
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -308,6 +309,13 @@ button,
   padding: 14px;
 }
 
+.inline-action-form {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
 .simulator {
   display: grid;
   gap: 14px;
@@ -317,6 +325,12 @@ button,
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.button-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
 }
 
 .quick-messages button {
@@ -333,6 +347,54 @@ button,
   border: 1px dashed var(--line);
   border-radius: 8px;
   background: #fbf8f5;
+}
+
+.onboarding-panel {
+  margin-top: 18px;
+  padding: 18px;
+}
+
+.onboarding-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.settings-form {
+  display: grid;
+  gap: 22px;
+}
+
+.settings-section {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.settings-section h2 {
+  grid-column: 1 / -1;
+}
+
+.wide-field {
+  grid-column: 1 / -1;
+}
+
+.form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.success-banner {
+  padding: 12px 14px;
+  border: 1px solid #b6dcc4;
+  border-radius: 6px;
+  background: #effaf2;
+  color: #1f6b43;
+  font-weight: 700;
 }
 
 .empty-state {
@@ -360,14 +422,22 @@ button,
 @media (max-width: 900px) {
   .grid,
   .layout,
+  .onboarding-form,
+  .settings-section,
   .detail-grid,
   .data-row {
     grid-template-columns: 1fr;
   }
 
+  .wide-field {
+    grid-column: auto;
+  }
+
   .topbar,
   .conversation-header,
-  .section-header {
+  .section-header,
+  .inline-action-form,
+  .form-footer {
     align-items: flex-start;
     flex-direction: column;
   }

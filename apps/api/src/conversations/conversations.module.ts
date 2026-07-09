@@ -1,4 +1,5 @@
 import { Module, forwardRef } from '@nestjs/common';
+import { ChannelsModule } from '../channels/channels.module';
 import { CompaniesModule } from '../companies/companies.module';
 import { FlowModule } from '../flow/flow.module';
 import { PrismaModule } from '../prisma/prisma.module';
@@ -6,7 +7,7 @@ import { ConversationsController } from './conversations.controller';
 import { ConversationsService } from './conversations.service';
 
 @Module({
-  imports: [PrismaModule, CompaniesModule, forwardRef(() => FlowModule)],
+  imports: [PrismaModule, CompaniesModule, ChannelsModule, forwardRef(() => FlowModule)],
   controllers: [ConversationsController],
   providers: [ConversationsService],
   exports: [ConversationsService],

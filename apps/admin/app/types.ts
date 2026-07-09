@@ -1,9 +1,31 @@
-import type { ConversationIntent, ConversationStatus, MetricsOverview } from '@chatbot/shared';
+import type {
+  CompanyBotConfig,
+  ConversationIntent,
+  ConversationStatus,
+  MetricsOverview,
+} from '@chatbot/shared';
 
 export interface Company {
   id: string;
   slug: string;
   name: string;
+  config?: {
+    internalEmail?: string | null;
+  } | null;
+}
+
+export interface CompanyDetail extends Company {
+  config: {
+    internalEmail?: string | null;
+    settings: CompanyBotConfig;
+  };
+  knowledge: Array<{
+    id: string;
+    question: string;
+    answer: string;
+    keywords: string[];
+    isActive: boolean;
+  }>;
 }
 
 export interface Contact {

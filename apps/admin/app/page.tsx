@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { simulateWhatsAppMessage } from './actions';
+import { createOnboardingCompany, simulateWhatsAppMessage } from './actions';
 import { apiFetch } from './api';
 import { ConnectionState } from './connection-state';
 import { Company, ConversationListItem, MetricsOverview } from './types';
@@ -18,7 +18,7 @@ export default async function HomePage({ searchParams }: PageProps) {
     return <ConnectionState />;
   }
 
-  const defaultCompany = companies.find((company) => company.slug === 'postres-beinetti') ?? companies[0];
+  const defaultCompany = companies.find((company) => company.slug === 'base-whatsapp') ?? companies[0];
   const selectedCompany = params.companyId ?? defaultCompany?.id;
   const selectedCompanyRecord = companies.find((company) => company.id === selectedCompany);
 
@@ -29,6 +29,8 @@ export default async function HomePage({ searchParams }: PageProps) {
       </main>
     );
   }
+
+  const simulatorPreset = getSimulatorPreset(selectedCompanyRecord.slug);
 
   const query = new URLSearchParams({ companyId: selectedCompany });
   if (params.status) query.set('status', params.status);
@@ -52,7 +54,7 @@ export default async function HomePage({ searchParams }: PageProps) {
         <div>
           <div className="eyebrow">Chatbot Admin</div>
           <h1>Bandeja de conversaciones</h1>
-          <p className="muted">Vista interna para revisar pedidos, FAQs y casos humanos.</p>
+          <p className="muted">Vista interna para revisar conversaciones, FAQs y casos humanos.</p>
         </div>
         <form>
           <select name="companyId" defaultValue={selectedCompany}>
@@ -65,13 +67,20 @@ export default async function HomePage({ searchParams }: PageProps) {
           <button type="submit" style={{ marginTop: 8 }}>
             Cambiar
           </button>
+          <Link
+            className="button secondary-button"
+            href={`/companies/${selectedCompany}/settings`}
+            style={{ marginTop: 8 }}
+          >
+            Configurar
+          </Link>
         </form>
       </header>
 
       <section className="grid">
         <Metric label="Conversaciones hoy" value={metrics.conversationsToday} />
         <Metric label="Derivadas a humano" value={`${metrics.needsHumanPercentage}%`} />
-        <Metric label="Pedidos estructurados" value={metrics.structuredOrders} />
+        <Metric label="Flujos estructurados" value={metrics.structuredOrders} />
         <Metric label="FAQs respondidas" value={metrics.faqAnswered} />
       </section>
 
@@ -89,9 +98,9 @@ export default async function HomePage({ searchParams }: PageProps) {
             </select>
             <select name="intent" defaultValue={params.intent ?? ''}>
               <option value="">Intención</option>
-              <option value="normal_order">Pedido normal</option>
-              <option value="special_order">Tarta especial</option>
-              <option value="restaurant_order">Restaurante</option>
+              <option value="normal_order">Consulta general</option>
+              <option value="special_order">Solicitud a medida</option>
+              <option value="restaurant_order">Empresa/B2B</option>
               <option value="faq">FAQ</option>
               <option value="human_support">Humano</option>
               <option value="unknown">Desconocido</option>
@@ -107,9 +116,9 @@ export default async function HomePage({ searchParams }: PageProps) {
             >
               <div className="row-title">
                 <span>{conversation.contact.displayName ?? conversation.contact.phone ?? 'Contacto'}</span>
-                <span className={`pill ${conversation.status}`}>{conversation.status}</span>
+                <span className={`pill ${conversation.status}`}>{STATUS_LABELS[conversation.status]}</span>
               </div>
-              <p className="muted">{conversation.intent}</p>
+              <p className="muted">{INTENT_LABELS[conversation.intent]}</p>
               <p>{conversation.messages[0]?.body ?? conversation.summary ?? 'Sin mensajes'}</p>
             </Link>
           ))}
@@ -135,31 +144,82 @@ export default async function HomePage({ searchParams }: PageProps) {
               <textarea
                 name="body"
                 rows={4}
-                defaultValue="Hola, quiero una tarta de comunión para 20 personas"
+                defaultValue={simulatorPreset.defaultMessage}
                 required
               />
             </label>
             <div className="quick-messages">
-              <button type="submit" name="body" value="Hola, quiero hacer un pedido">
-                Pedido normal
-              </button>
-              <button
-                type="submit"
-                name="body"
-                value="Hola, quiero una tarta de comunión para 20 personas"
-              >
-                Tarta especial
-              </button>
-              <button type="submit" name="body" value="Soy un restaurante y quiero hacer un pedido">
-                Restaurante
-              </button>
-              <button type="submit" name="body" value="¿Cuál es vuestro horario?">
-                FAQ
+              {simulatorPreset.quickMessages.map((message) => (
+                <button key={message.label} type="submit" name="body" value={message.value}>
+                  {message.label}
+                </button>
+              ))}
+            </div>
+            <div className="button-row">
+              <button type="submit">Enviar mensaje</button>
+              <button className="secondary-button" type="submit" name="mode" value="new">
+                Nueva simulación
               </button>
             </div>
-            <button type="submit">Enviar mensaje</button>
           </form>
         </section>
+      </section>
+
+      <section className="onboarding-panel">
+        <div className="section-header">
+          <div>
+            <h2>Onboarding interno de cliente</h2>
+            <p className="muted">
+              Alta semi-automática: empresa, configuración base y FAQs iniciales.
+            </p>
+          </div>
+        </div>
+        <form className="onboarding-form" action={createOnboardingCompany}>
+          <label>
+            Nombre del cliente
+            <input name="name" placeholder="Ej. Clínica Norte" required />
+          </label>
+          <label>
+            Slug opcional
+            <input name="slug" placeholder="clinica-norte" />
+          </label>
+          <label>
+            Email interno
+            <input name="internalEmail" type="email" placeholder="equipo@cliente.com" />
+          </label>
+          <label>
+            Web
+            <input name="websiteUrl" placeholder="https://cliente.com" />
+          </label>
+          <label>
+            Tienda/reservas
+            <input name="onlineStoreUrl" placeholder="https://cliente.com/reservas" />
+          </label>
+          <label>
+            Instagram
+            <input name="instagramUrl" placeholder="https://instagram.com/cliente" />
+          </label>
+          <label>
+            Sede principal
+            <input name="locationName" placeholder="Principal" />
+          </label>
+          <label>
+            Dirección
+            <input name="locationAddress" placeholder="Calle, ciudad" />
+          </label>
+          <label className="wide-field">
+            FAQs iniciales
+            <textarea
+              name="faqSeed"
+              rows={5}
+              placeholder={'¿Cuál es el horario?|Abrimos de lunes a viernes...\n¿Dónde estáis?|Estamos en...'}
+            />
+          </label>
+          <div className="wide-field form-footer">
+            <span className="muted">Formato FAQ: una línea por pregunta, separando pregunta y respuesta con |.</span>
+            <button type="submit">Crear cliente</button>
+          </div>
+        </form>
       </section>
     </main>
   );
@@ -172,4 +232,56 @@ function Metric({ label, value }: { label: string; value: string | number }) {
       <span className="muted">{label}</span>
     </div>
   );
+}
+
+const STATUS_LABELS = {
+  open: 'abierta',
+  waiting_customer: 'esperando cliente',
+  needs_human: 'requiere humano',
+  closed: 'cerrada',
+} as const;
+
+const INTENT_LABELS = {
+  normal_order: 'Consulta general',
+  special_order: 'Solicitud a medida',
+  restaurant_order: 'Empresa/B2B',
+  faq: 'FAQ',
+  human_support: 'Humano',
+  unknown: 'Sin clasificar',
+} as const;
+
+function getSimulatorPreset(companySlug: string) {
+  if (companySlug === 'postres-beinetti') {
+    return {
+      defaultMessage: 'Hola, quiero una tarta de comunión para 20 personas',
+      quickMessages: [
+        { label: 'Pedido normal', value: 'Hola, quiero hacer un pedido' },
+        { label: 'Tarta especial', value: 'Hola, quiero una tarta de comunión para 20 personas' },
+        { label: 'Restaurante', value: 'Soy un restaurante y quiero hacer un pedido' },
+        { label: 'FAQ', value: '¿Cuál es vuestro horario?' },
+      ],
+    };
+  }
+
+  if (companySlug === 'clinica-demo') {
+    return {
+      defaultMessage: 'Hola, quiero pedir una cita para una revisión',
+      quickMessages: [
+        { label: 'Pedir cita', value: 'Hola, quiero pedir una cita para una revisión' },
+        { label: 'Tratamiento', value: 'Necesito información sobre un tratamiento' },
+        { label: 'Seguro médico', value: 'Trabajo con una aseguradora y quiero información' },
+        { label: 'FAQ', value: '¿Cuál es vuestro horario?' },
+      ],
+    };
+  }
+
+  return {
+    defaultMessage: 'Hola, necesito un presupuesto personalizado',
+    quickMessages: [
+      { label: 'Consulta general', value: 'Hola, quiero información sobre vuestros servicios' },
+      { label: 'Solicitud a medida', value: 'Hola, necesito un presupuesto personalizado' },
+      { label: 'Empresa/B2B', value: 'Somos una empresa y queremos colaborar' },
+      { label: 'FAQ', value: '¿Cuál es vuestro horario?' },
+    ],
+  };
 }

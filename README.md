@@ -1,6 +1,6 @@
-# Commercial Chatbot Platform
+# WhatsApp Chatbot Platform
 
-Backend agnóstico para automatización conversacional. El primer caso de uso es Postres Beinetti, pero el core está preparado para varias empresas mediante `companyId`.
+Base reutilizable para crear chatbots de WhatsApp para empresas. El core es multiempresa mediante `companyId`/`companySlug`; cada cliente se customiza con configuración, FAQs, mensajes y flujos.
 
 ## Stack
 
@@ -9,6 +9,10 @@ Backend agnóstico para automatización conversacional. El primer caso de uso es
 - Canal inicial: Twilio WhatsApp
 - Panel interno: Next.js
 - Shared package: enums y tipos comunes
+
+Guía de la base WhatsApp: [docs/whatsapp-chatbot-base.md](docs/whatsapp-chatbot-base.md)
+
+Guía de Twilio WhatsApp: [docs/twilio-whatsapp-setup.md](docs/twilio-whatsapp-setup.md)
 
 ## Quickstart
 
@@ -48,12 +52,12 @@ Guía completa: [docs/neon-setup.md](docs/neon-setup.md)
 - `pnpm dev:admin`: arranca solo Next.js.
 - `pnpm build`: compila todos los paquetes.
 - `npm test`: ejecuta los tests de API con Jest.
-- `pnpm build`: compila shared, API y admin.
+- `pnpm simulate:whatsapp "mensaje"`: simula un mensaje entrante de Twilio WhatsApp contra la API local.
 - `npm run env:check`: valida `.env` antes de conectar a DB remota.
 - `pnpm db:migrate`: aplica migraciones Prisma.
 - `pnpm db:deploy`: aplica migraciones existentes en staging/producción.
 - `pnpm db:studio`: abre Prisma Studio.
-- `pnpm db:seed`: crea empresas/configs Beinetti y demo.
+- `pnpm db:seed`: crea `base-whatsapp`, Beinetti y demo.
 
 ## Arquitectura MVP
 
@@ -70,8 +74,8 @@ Incluido:
 - Contactos, conversaciones, mensajes y notas internas.
 - Adaptador Twilio WhatsApp.
 - Clasificación inicial por reglas configurables.
-- Routing para pedido normal, tarta especial, restaurante, FAQ y humano.
-- Seeds Beinetti y demo.
+- Routing para consulta normal, solicitud a medida, cliente empresa, FAQ y humano.
+- Seeds `base-whatsapp`, Beinetti y demo.
 - Panel interno básico.
 - Métricas operativas.
 
@@ -84,6 +88,7 @@ No incluido todavía:
 
 ## API MVP
 
+- `POST /webhooks/twilio/whatsapp`
 - `POST /webhooks/twilio/whatsapp?companySlug=postres-beinetti`
 - `GET /companies`
 - `GET /conversations?companyId=&status=&intent=`
@@ -102,11 +107,12 @@ Authorization: Bearer <ADMIN_API_TOKEN>
 
 Si WhatsApp no responde:
 
-1. Revisar que Twilio apunta a `/webhooks/twilio/whatsapp?companySlug=postres-beinetti`.
-2. Confirmar que `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN` y `TWILIO_WHATSAPP_FROM` están definidos si se usa envío activo por API.
-3. Revisar logs del backend para errores de webhook.
-4. Confirmar que existe la empresa con `slug=postres-beinetti` ejecutando `pnpm db:seed`.
-5. Revisar en el panel si la conversación entró y quedó marcada como `needs_human`.
+1. Revisar que Twilio apunta a `/webhooks/twilio/whatsapp` o `/webhooks/twilio/whatsapp?companySlug=slug-del-cliente`.
+2. Confirmar que `DEFAULT_COMPANY_SLUG` apunta a una empresa activa si no se usa `companySlug` en la URL.
+3. Confirmar que `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN` y `TWILIO_WHATSAPP_FROM` están definidos si se usa envío activo por API.
+4. Revisar logs del backend para errores de webhook.
+5. Confirmar que existe la empresa ejecutando `pnpm db:seed`.
+6. Revisar en el panel si la conversación entró y quedó marcada como `needs_human`.
 
 ## Verificación actual
 

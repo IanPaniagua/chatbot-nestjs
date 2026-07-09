@@ -1,6 +1,11 @@
 import { Body, Controller, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { AdminTokenGuard } from '../admin-token.guard';
-import { CreateInternalNoteDto, ListConversationsQuery, UpdateConversationStatusDto } from './dto';
+import {
+  CreateInternalNoteDto,
+  ListConversationsQuery,
+  SendManualMessageDto,
+  UpdateConversationStatusDto,
+} from './dto';
 import { ConversationsService } from './conversations.service';
 
 @Controller('conversations')
@@ -34,5 +39,19 @@ export class ConversationsController {
     @Body() body: CreateInternalNoteDto,
   ) {
     return this.conversations.addInternalNote(companyId, id, body);
+  }
+
+  @Post(':id/manual-messages')
+  sendManualMessage(
+    @Param('id') id: string,
+    @Query('companyId') companyId: string,
+    @Body() body: SendManualMessageDto,
+  ) {
+    return this.conversations.sendManualMessage(companyId, id, body);
+  }
+
+  @Post(':id/reset-flow')
+  resetFlow(@Param('id') id: string, @Query('companyId') companyId: string) {
+    return this.conversations.resetFlow(companyId, id);
   }
 }

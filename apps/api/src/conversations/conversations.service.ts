@@ -1,10 +1,11 @@
 import { Inject, Injectable, Logger, NotFoundException, forwardRef } from '@nestjs/common';
 import { Channel, ConversationIntent, ConversationStatus, MessageDirection } from '@prisma/client';
 import { InboundMessage } from '../channels/channel.types';
+import { TwilioChannelService } from '../channels/twilio-channel.service';
 import { CompaniesService } from '../companies/companies.service';
 import { FlowService, RoutingResult } from '../flow/flow.service';
 import { PrismaService } from '../prisma/prisma.service';
-import { CreateInternalNoteDto, ListConversationsQuery } from './dto';
+import { CreateInternalNoteDto, ListConversationsQuery, SendManualMessageDto } from './dto';
 
 @Injectable()
 export class ConversationsService {
@@ -13,6 +14,7 @@ export class ConversationsService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly companies: CompaniesService,
+    private readonly twilio: TwilioChannelService,
     @Inject(forwardRef(() => FlowService))
     private readonly flow: FlowService,
   ) {}
@@ -65,6 +67,92 @@ export class ConversationsService {
 
   addInternalNote(companyId: string, conversationId: string, body: CreateInternalNoteDto) {
     return this.createInternalNote(companyId, conversationId, body);
+  }
+
+  async sendManualMessage(companyId: string, conversationId: string, body: SendManualMessageDto) {
+    const conversation = await this.prisma.conversation.findFirst({
+      where: { id: conversationId, companyId },
+      include: { contact: true },
+    });
+
+    if (!conversation) {
+      throw new NotFoundException('Conversation not found');
+    }
+
+    const text = body.body.trim();
+    const sendResult =
+      conversation.channel === Channel.whatsapp
+        ? await this.twilio.send({
+            companyId,
+            channel: 'whatsapp',
+            to: conversation.contact.externalId,
+            body: text,
+            provider: 'twilio',
+            metadata: { manual: true, author: body.author ?? 'admin' },
+          })
+        : {};
+
+    const message = await this.prisma.message.create({
+      data: {
+        companyId,
+        contactId: conversation.contactId,
+        conversationId,
+        channel: conversation.channel,
+        direction: MessageDirection.outbound,
+        body: text,
+        provider: 'twilio',
+        providerMessageId: sendResult.providerMessageId,
+        metadata: {
+          manual: true,
+          author: body.author ?? 'admin',
+          sentToProvider: Boolean(sendResult.providerMessageId),
+        },
+      },
+    });
+
+    await this.prisma.conversation.update({
+      where: { id: conversationId },
+      data: {
+        status: ConversationStatus.waiting_customer,
+        lastMessageAt: new Date(),
+      },
+    });
+
+    return message;
+  }
+
+  async resetFlow(companyId: string, conversationId: string) {
+    const conversation = await this.prisma.conversation.findFirst({
+      where: { id: conversationId, companyId },
+      include: { flowSession: true },
+    });
+
+    if (!conversation) {
+      throw new NotFoundException('Conversation not found');
+    }
+
+    await this.prisma.$transaction([
+      this.prisma.flowSession.deleteMany({ where: { conversationId } }),
+      this.prisma.conversation.update({
+        where: { id: conversationId },
+        data: {
+          status: ConversationStatus.open,
+          intent: ConversationIntent.unknown,
+          collectedData: undefined,
+          summary: null,
+        },
+      }),
+      this.prisma.internalNote.create({
+        data: {
+          companyId,
+          conversationId,
+          author: 'system',
+          body: 'Flujo conversacional reiniciado desde el admin.',
+        },
+      }),
+    ]);
+
+    return this.getById(companyId, conversationId);
   }
 
   private async createInternalNote(
