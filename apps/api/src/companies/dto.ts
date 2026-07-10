@@ -81,6 +81,58 @@ export class UpdateCompanySettingsDto {
 
   @IsOptional()
   @IsString()
+  clarificationPrompt?: string;
+
+  @IsOptional()
+  @IsString()
+  capabilities?: string;
+
+  @IsOptional()
+  @IsString()
+  courtesyThanks?: string;
+
+  @IsOptional()
+  @IsString()
+  courtesyGoodbye?: string;
+
+  @IsOptional()
+  @IsString()
+  flowResumePrompt?: string;
+
+  @IsOptional()
+  @IsString()
+  flowContinuePrefix?: string;
+
+  @IsOptional()
+  @IsString()
+  flowLowInformation?: string;
+
+  @IsOptional()
+  @IsString()
+  specialFlowWelcome?: string;
+
+  @IsOptional()
+  @IsString()
+  specialFlowFields?: string;
+
+  @IsOptional()
+  @IsString()
+  specialFlowCompletion?: string;
+
+  @IsOptional()
+  @IsString()
+  restaurantFlowWelcome?: string;
+
+  @IsOptional()
+  @IsString()
+  restaurantFlowFields?: string;
+
+  @IsOptional()
+  @IsString()
+  restaurantFlowCompletion?: string;
+
+  @IsOptional()
+  @IsString()
   normalOrderKeywords?: string;
 
   @IsOptional()

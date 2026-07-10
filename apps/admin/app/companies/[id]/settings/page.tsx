@@ -22,6 +22,8 @@ export default async function CompanySettingsPage({ params, searchParams }: Page
 
   const settings = company.config.settings;
   const location = settings.locations[0];
+  const specialFlow = settings.flows.special_order;
+  const restaurantFlow = settings.flows.restaurant_order;
 
   return (
     <main className="shell">
@@ -112,6 +114,62 @@ export default async function CompanySettingsPage({ params, searchParams }: Page
                 required
               />
             </label>
+            <label className="wide-field">
+              Aclaración
+              <textarea
+                name="clarificationPrompt"
+                rows={3}
+                defaultValue={settings.messages.clarificationPrompt ?? ''}
+              />
+            </label>
+            <label className="wide-field">
+              Capacidades
+              <textarea
+                name="capabilities"
+                rows={4}
+                defaultValue={settings.messages.capabilities ?? ''}
+              />
+            </label>
+            <label>
+              Gracias
+              <textarea
+                name="courtesyThanks"
+                rows={3}
+                defaultValue={settings.messages.courtesyThanks ?? ''}
+              />
+            </label>
+            <label>
+              Despedida
+              <textarea
+                name="courtesyGoodbye"
+                rows={3}
+                defaultValue={settings.messages.courtesyGoodbye ?? ''}
+              />
+            </label>
+            <label className="wide-field">
+              Reanudar flujo
+              <textarea
+                name="flowResumePrompt"
+                rows={3}
+                defaultValue={settings.messages.flowResumePrompt ?? ''}
+              />
+            </label>
+            <label>
+              Continuar flujo
+              <textarea
+                name="flowContinuePrefix"
+                rows={2}
+                defaultValue={settings.messages.flowContinuePrefix ?? ''}
+              />
+            </label>
+            <label>
+              Dato incompleto
+              <textarea
+                name="flowLowInformation"
+                rows={3}
+                defaultValue={settings.messages.flowLowInformation ?? ''}
+              />
+            </label>
           </section>
 
           <section className="settings-section">
@@ -159,6 +217,61 @@ export default async function CompanySettingsPage({ params, searchParams }: Page
           </section>
 
           <section className="settings-section">
+            <h2>Flujos</h2>
+            <label className="wide-field">
+              Solicitud a medida · bienvenida
+              <textarea
+                name="specialFlowWelcome"
+                rows={3}
+                defaultValue={specialFlow?.welcome ?? ''}
+              />
+            </label>
+            <label className="wide-field">
+              Solicitud a medida · campos
+              <textarea
+                name="specialFlowFields"
+                rows={8}
+                defaultValue={formatFlowFields(specialFlow?.requiredFields)}
+              />
+            </label>
+            <label className="wide-field">
+              Solicitud a medida · cierre
+              <textarea
+                name="specialFlowCompletion"
+                rows={3}
+                defaultValue={specialFlow?.completionMessage ?? ''}
+              />
+            </label>
+            <label className="wide-field">
+              Empresa/B2B · bienvenida
+              <textarea
+                name="restaurantFlowWelcome"
+                rows={3}
+                defaultValue={restaurantFlow?.welcome ?? ''}
+              />
+            </label>
+            <label className="wide-field">
+              Empresa/B2B · campos
+              <textarea
+                name="restaurantFlowFields"
+                rows={7}
+                defaultValue={formatFlowFields(restaurantFlow?.requiredFields)}
+              />
+            </label>
+            <label className="wide-field">
+              Empresa/B2B · cierre
+              <textarea
+                name="restaurantFlowCompletion"
+                rows={3}
+                defaultValue={restaurantFlow?.completionMessage ?? ''}
+              />
+            </label>
+            <p className="muted wide-field">
+              Formato de campos: key|label|pregunta|optional. Una línea por campo.
+            </p>
+          </section>
+
+          <section className="settings-section">
             <h2>FAQs</h2>
             <label className="wide-field">
               Base de conocimiento
@@ -186,5 +299,15 @@ function formatKeywords(keywords?: string[]) {
 function formatFaqs(faqs: CompanyDetail['config']['settings']['faqs']) {
   return faqs
     .map((faq) => `${faq.question}|${faq.answer}|${faq.keywords.join(', ')}`)
+    .join('\n');
+}
+
+function formatFlowFields(fields?: CompanyDetail['config']['settings']['flows'][string]['requiredFields']) {
+  return (fields ?? [])
+    .map((field) =>
+      [field.key, field.label, field.prompt, field.optional ? 'optional' : '']
+        .filter((part, index) => index < 3 || Boolean(part))
+        .join('|'),
+    )
     .join('\n');
 }

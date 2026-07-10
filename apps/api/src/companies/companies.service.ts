@@ -128,6 +128,13 @@ export class CompaniesService {
         fallback: input.fallback.trim(),
         humanHandoff: input.humanHandoff.trim(),
         normalOrderRedirect: input.normalOrderRedirect.trim(),
+        clarificationPrompt: cleanOptional(input.clarificationPrompt),
+        capabilities: cleanOptional(input.capabilities),
+        courtesyThanks: cleanOptional(input.courtesyThanks),
+        courtesyGoodbye: cleanOptional(input.courtesyGoodbye),
+        flowResumePrompt: cleanOptional(input.flowResumePrompt),
+        flowContinuePrefix: cleanOptional(input.flowContinuePrefix),
+        flowLowInformation: cleanOptional(input.flowLowInformation),
       },
       routingKeywords: {
         normal_order: parseKeywordList(input.normalOrderKeywords),
@@ -135,6 +142,19 @@ export class CompaniesService {
         restaurant_order: parseKeywordList(input.restaurantOrderKeywords),
         faq: parseKeywordList(input.faqKeywords),
         human_support: parseKeywordList(input.humanSupportKeywords),
+      },
+      flows: {
+        ...currentConfig.flows,
+        special_order: buildEditableFlow(currentConfig.flows.special_order, {
+          welcome: input.specialFlowWelcome,
+          fields: input.specialFlowFields,
+          completionMessage: input.specialFlowCompletion,
+        }),
+        restaurant_order: buildEditableFlow(currentConfig.flows.restaurant_order, {
+          welcome: input.restaurantFlowWelcome,
+          fields: input.restaurantFlowFields,
+          completionMessage: input.restaurantFlowCompletion,
+        }),
       },
       faqs,
     };
@@ -221,6 +241,17 @@ function buildOnboardingConfig(
       normalOrderRedirect: onlineStoreUrl
         ? 'Puedes ver la información principal aquí: {{onlineStoreUrl}}\n\nSi necesitas algo concreto, responde a este mensaje y te ayudamos.'
         : 'Gracias. Cuéntanos qué necesitas y el equipo lo revisará.',
+      clarificationPrompt:
+        'Para ayudarte bien, necesito un poco más de contexto. ¿Buscas información general, una propuesta/presupuesto o prefieres que lo revise una persona del equipo?',
+      capabilities:
+        'Puedo ayudarte con dudas frecuentes, información sobre servicios, solicitudes a medida y recogida de datos para que el equipo pueda responder mejor.{{websiteHint}}\n\nCuéntame qué necesitas y lo vemos paso a paso.',
+      courtesyThanks: 'Gracias a ti. Si necesitas algo más, puedes escribirme por aquí.',
+      courtesyGoodbye: 'Perfecto, quedo por aquí si necesitas algo más.',
+      flowResumePrompt:
+        'Veo que teníamos una solicitud abierta. ¿Quieres continuar con esa solicitud o empezar una consulta nueva?',
+      flowContinuePrefix: 'Perfecto, seguimos.',
+      flowLowInformation:
+        'No pasa nada. Si no tienes todos los datos, dime lo que sepas y lo dejamos preparado para que el equipo lo revise.',
     },
     faqs,
     flows: {
@@ -313,6 +344,46 @@ function parseFaqSeed(seed?: string): CompanyBotConfig['faqs'] {
       keywords: ['contacto', 'contactar', 'telefono', 'teléfono', 'email'],
     },
   ];
+}
+
+function buildEditableFlow(
+  currentFlow: CompanyBotConfig['flows'][string],
+  input: { welcome?: string; fields?: string; completionMessage?: string },
+): CompanyBotConfig['flows'][string] {
+  return {
+    welcome: cleanOptional(input.welcome) || currentFlow.welcome,
+    requiredFields: parseFlowFields(input.fields, currentFlow.requiredFields),
+    completionMessage: cleanOptional(input.completionMessage) || currentFlow.completionMessage,
+  };
+}
+
+function parseFlowFields(
+  value: string | undefined,
+  fallback: CompanyBotConfig['flows'][string]['requiredFields'],
+): CompanyBotConfig['flows'][string]['requiredFields'] {
+  const fields: CompanyBotConfig['flows'][string]['requiredFields'] = [];
+
+  for (const line of value?.split('\n') ?? []) {
+    const [key, label, prompt, optional] = line.split('|').map((part) => part?.trim());
+
+    if (!key || !label || !prompt) {
+      continue;
+    }
+
+    const field: CompanyBotConfig['flows'][string]['requiredFields'][number] = {
+      key,
+      label,
+      prompt,
+    };
+
+    if (optional === 'optional' || optional === 'true' || optional === '1') {
+      field.optional = true;
+    }
+
+    fields.push(field);
+  }
+
+  return fields.length > 0 ? fields : fallback;
 }
 
 function parseKeywordList(value?: string) {

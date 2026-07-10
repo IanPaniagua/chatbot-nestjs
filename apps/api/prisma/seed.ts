@@ -280,6 +280,108 @@ const clinicConfig: CompanyBotConfig = {
   },
 };
 
+const techPresenceConfig: CompanyBotConfig = {
+  language: 'es',
+  timezone: 'Europe/Madrid',
+  websiteUrl: 'https://techpresencematters.com',
+  onlineStoreUrl: 'https://techpresencematters.com',
+  internalEmail: 'hello@techpresencematters.com',
+  locations: [{ name: 'Online', pickupNotes: 'Atención remota y reuniones bajo cita.' }],
+  routingKeywords: {
+    normal_order: ['servicio', 'servicios', 'web', 'pagina web', 'página web', 'automatizacion', 'automatización', 'seo', 'presencia online'],
+    special_order: ['presupuesto', 'propuesta', 'auditoria', 'auditoría', 'proyecto', 'mejorar', 'necesito ayuda', 'quiero empezar'],
+    restaurant_order: ['empresa', 'agencia', 'colaboracion', 'colaboración', 'partner', 'b2b', 'equipo'],
+    faq: ['precio', 'precios', 'plazo', 'tiempo', 'como funciona', 'cómo funciona', 'reunion', 'reunión', 'contacto'],
+    human_support: ['persona', 'humano', 'agente', 'hablar con alguien', 'hablar con una persona'],
+  },
+  messages: {
+    greeting: 'Hola, gracias por escribir a Tech Presence Matters.',
+    fallback:
+      'Gracias. No estoy seguro de haber entendido del todo la consulta. La dejo marcada para que el equipo pueda revisarla.',
+    humanHandoff:
+      'Perfecto, dejo esta conversación marcada para que una persona del equipo pueda revisarla.',
+    normalOrderRedirect:
+      'Puedes ver la información principal aquí: {{onlineStoreUrl}}\n\nSi quieres, cuéntame qué necesitas mejorar y te oriento.',
+    clarificationPrompt:
+      'Para orientarte bien, necesito un poco más de contexto. ¿Quieres mejorar tu web, captar más clientes, automatizar procesos o preparar una propuesta?',
+    capabilities:
+      'Puedo ayudarte con dudas sobre presencia online, webs, automatizaciones, auditorías digitales y preparación de una propuesta.{{websiteHint}}\n\nCuéntame qué estás intentando mejorar y te guío paso a paso.',
+    courtesyThanks: 'Gracias a ti. Si quieres revisar tu presencia online o preparar una propuesta, puedes escribirme por aquí.',
+    courtesyGoodbye: 'Perfecto, quedo por aquí si necesitas revisar algo más adelante.',
+    flowResumePrompt:
+      'Veo que teníamos una solicitud abierta. ¿Quieres continuar con esa solicitud o empezar una consulta nueva?',
+    flowContinuePrefix: 'Perfecto, seguimos.',
+    flowLowInformation:
+      'No pasa nada. Con una idea aproximada es suficiente para empezar; después el equipo puede afinar los detalles.',
+  },
+  faqs: [
+    {
+      question: '¿Qué hace Tech Presence Matters?',
+      answer:
+        'Ayudamos a mejorar la presencia digital de un negocio con web, automatización, estrategia online y sistemas para captar y gestionar mejor los leads.',
+      keywords: ['que haceis', 'qué hacéis', 'servicios', 'presencia online', 'web', 'automatizacion', 'automatización'],
+    },
+    {
+      question: '¿Cómo empieza un proyecto?',
+      answer:
+        'Normalmente empezamos entendiendo el negocio, la situación actual y el objetivo principal. Después se prepara una propuesta con prioridades y próximos pasos.',
+      keywords: ['como funciona', 'cómo funciona', 'empezar', 'proyecto', 'propuesta', 'primer paso'],
+    },
+    {
+      question: '¿Trabajáis con precios cerrados?',
+      answer:
+        'Depende del alcance. Para poder orientar bien el presupuesto necesitamos saber qué hay que mejorar, qué activos existen ya y qué objetivo tiene el proyecto.',
+      keywords: ['precio', 'precios', 'presupuesto', 'coste', 'cuanto cuesta', 'cuánto cuesta'],
+    },
+    {
+      question: '¿Podéis revisar mi web actual?',
+      answer:
+        'Sí. Podemos revisar la web actual, detectar puntos de mejora y priorizar acciones sobre claridad, captación, confianza, automatización y conversión.',
+      keywords: ['revisar web', 'auditoria', 'auditoría', 'mi web', 'pagina web', 'página web'],
+    },
+  ],
+  flows: {
+    special_order: {
+      welcome: 'Perfecto. Para preparar una primera orientación necesito algunos datos.',
+      requiredFields: [
+        { key: 'business', label: 'Negocio', prompt: '¿Qué tipo de negocio o proyecto tienes?' },
+        { key: 'goal', label: 'Objetivo', prompt: '¿Qué quieres mejorar ahora mismo?' },
+        { key: 'currentPresence', label: 'Situación actual', prompt: '¿Tienes web, redes o algún sistema funcionando ya?' },
+        { key: 'timeline', label: 'Plazo', prompt: '¿Tienes algún plazo o urgencia?' },
+        {
+          key: 'notes',
+          label: 'Observaciones',
+          prompt: '¿Quieres añadir algún detalle importante?',
+          optional: true,
+        },
+      ],
+      completionMessage:
+        'Gracias. He recogido los datos principales para que el equipo pueda revisar la solicitud.',
+    },
+    restaurant_order: {
+      welcome: 'Perfecto. Para una colaboración o consulta de empresa necesito algunos datos.',
+      requiredFields: [
+        { key: 'companyName', label: 'Empresa', prompt: '¿Cuál es el nombre de la empresa?' },
+        { key: 'contactName', label: 'Contacto', prompt: '¿Quién es la persona de contacto?' },
+        { key: 'request', label: 'Solicitud', prompt: 'Cuéntame qué necesitáis, por favor.' },
+        {
+          key: 'notes',
+          label: 'Observaciones',
+          prompt: '¿Hay alguna observación adicional?',
+          optional: true,
+        },
+      ],
+      completionMessage:
+        'Gracias. He estructurado la consulta para que el equipo pueda revisarla.',
+    },
+    faq: {
+      welcome: 'Te ayudo con tu consulta.',
+      requiredFields: [],
+      completionMessage: 'Consulta respondida.',
+    },
+  },
+};
+
 const demoConfig: CompanyBotConfig = {
   ...beinettiConfig,
   onlineStoreUrl: 'https://example.com',
@@ -345,6 +447,7 @@ async function main() {
   await upsertCompany('base-whatsapp', 'Base WhatsApp Chatbot', baseWhatsAppConfig);
   await upsertCompany('clinica-demo', 'Clínica Demo', clinicConfig);
   await upsertCompany('postres-beinetti', 'Postres Beinetti (demo)', beinettiConfig);
+  await upsertCompany('tech-presence-matters', 'Tech Presence Matters', techPresenceConfig);
   await upsertCompany('demo-website', 'Demo Website', demoConfig);
 }
 

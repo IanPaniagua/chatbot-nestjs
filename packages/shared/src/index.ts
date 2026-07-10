@@ -63,6 +63,13 @@ export interface BotMessages {
   fallback: string;
   humanHandoff: string;
   normalOrderRedirect: string;
+  clarificationPrompt?: string;
+  capabilities?: string;
+  courtesyThanks?: string;
+  courtesyGoodbye?: string;
+  flowResumePrompt?: string;
+  flowContinuePrefix?: string;
+  flowLowInformation?: string;
 }
 
 export interface ConversationSummary {

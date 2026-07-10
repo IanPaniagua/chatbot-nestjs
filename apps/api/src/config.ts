@@ -9,7 +9,17 @@ const envSchema = z.object({
   TWILIO_AUTH_TOKEN: z.string().optional().default(''),
   TWILIO_WHATSAPP_FROM: z.string().optional().default(''),
   OPENAI_API_KEY: z.string().optional().default(''),
+  OPENAI_MODEL: z.string().optional().default(''),
+  AI_AGENT_ENABLED: z.coerce.boolean().default(false),
   AI_CLASSIFICATION_ENABLED: z.coerce.boolean().default(false),
+}).superRefine((config, ctx) => {
+  if (config.AI_AGENT_ENABLED && !config.OPENAI_MODEL) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: 'OPENAI_MODEL is required when AI_AGENT_ENABLED=true',
+      path: ['OPENAI_MODEL'],
+    });
+  }
 });
 
 export type AppConfig = z.infer<typeof envSchema>;

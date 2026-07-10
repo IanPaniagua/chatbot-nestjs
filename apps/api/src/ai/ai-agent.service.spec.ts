@@ -1,0 +1,220 @@
+import { ConversationIntent, ConversationStatus } from '@prisma/client';
+import { testCompanyConfig } from '../../test/fixtures/company-config';
+import { AiAgentService } from './ai-agent.service';
+
+describe('AiAgentService', () => {
+  const originalFetch = global.fetch;
+  const config = {
+    get: jest.fn(),
+  };
+  const prisma = {
+    knowledgeBaseEntry: {
+      findMany: jest.fn(),
+    },
+    message: {
+      findMany: jest.fn(),
+    },
+  };
+
+  const validDecision = {
+    reply: 'Tiene sentido. Para orientarte bien, dime cuál es el objetivo del chatbot.',
+    intent: ConversationIntent.special_order,
+    status: ConversationStatus.open,
+    confidence: 0.87,
+    shouldStartFlow: false,
+    flowKey: null,
+    collectedDataPatch: { need: 'chatbot inteligente' },
+    needsHuman: false,
+    reason: 'La IA entendió una consulta comercial.',
+    usedKnowledgeIds: ['faq-1'],
+  };
+
+  let service: AiAgentService;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    config.get.mockImplementation((key: string) => {
+      const values: Record<string, unknown> = {
+        AI_AGENT_ENABLED: true,
+        OPENAI_API_KEY: 'test-key',
+        OPENAI_MODEL: 'gpt-test',
+      };
+      return values[key];
+    });
+    prisma.knowledgeBaseEntry.findMany.mockResolvedValue([
+      {
+        id: 'faq-1',
+        question: '¿Hacéis chatbots?',
+        answer: 'Sí, diseñamos chatbots para webs y WhatsApp.',
+        keywords: ['chatbot', 'web'],
+      },
+    ]);
+    prisma.message.findMany.mockResolvedValue([]);
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ output_text: JSON.stringify(validDecision) }),
+    }) as unknown as typeof fetch;
+    service = new AiAgentService(config as any, prisma as any);
+  });
+
+  afterAll(() => {
+    global.fetch = originalFetch;
+  });
+
+  it('returns a valid structured decision from OpenAI', async () => {
+    const decision = await service.decide({
+      companyId: 'company-1',
+      conversationId: 'conversation-1',
+      body: 'Necesito un chatbot inteligente para mi website',
+      config: testCompanyConfig,
+      activeFlow: null,
+    });
+
+    expect(decision).toEqual(validDecision);
+    expect(global.fetch).toHaveBeenCalledWith(
+      'https://api.openai.com/v1/responses',
+      expect.objectContaining({
+        method: 'POST',
+        headers: expect.objectContaining({
+          Authorization: 'Bearer test-key',
+        }),
+      }),
+    );
+  });
+
+  it('returns null when the AI output is invalid', async () => {
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ output_text: '{"reply":""}' }),
+    }) as unknown as typeof fetch;
+
+    const decision = await service.decide({
+      companyId: 'company-1',
+      conversationId: 'conversation-1',
+      body: 'Necesito algo',
+      config: testCompanyConfig,
+      activeFlow: null,
+    });
+
+    expect(decision).toBeNull();
+  });
+
+  it('passes active knowledge entries into the prompt', async () => {
+    await service.decide({
+      companyId: 'company-1',
+      conversationId: 'conversation-1',
+      body: '¿Hacéis chatbots?',
+      config: testCompanyConfig,
+      activeFlow: null,
+    });
+
+    const requestBody = JSON.parse((global.fetch as jest.Mock).mock.calls[0][1].body);
+    const systemPrompt = requestBody.input[0].content[0].text;
+
+    expect(systemPrompt).toContain('faq-1');
+    expect(systemPrompt).toContain('¿Hacéis chatbots?');
+    expect(systemPrompt).toContain('Sí, diseñamos chatbots para webs y WhatsApp.');
+    expect(systemPrompt).toContain('Tu alcance es estricto');
+    expect(systemPrompt).toContain('No inventes precios');
+  });
+
+  it('rejects unsupported price claims from the AI response', async () => {
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        output_text: JSON.stringify({
+          ...validDecision,
+          reply: 'Un chatbot cuesta 300€ y lo podemos tener listo en 3 días.',
+          usedKnowledgeIds: [],
+        }),
+      }),
+    }) as unknown as typeof fetch;
+
+    const decision = await service.decide({
+      companyId: 'company-1',
+      conversationId: 'conversation-1',
+      body: '¿Cuánto cuesta un chatbot?',
+      config: testCompanyConfig,
+      activeFlow: null,
+    });
+
+    expect(decision).toBeNull();
+  });
+
+  it('allows price claims when they are backed by authorized knowledge', async () => {
+    prisma.knowledgeBaseEntry.findMany.mockResolvedValueOnce([
+      {
+        id: 'faq-price',
+        question: '¿Cuánto cuesta un chatbot?',
+        answer: 'Los chatbots empiezan desde 300€ cuando el alcance es básico.',
+        keywords: ['precio', 'chatbot'],
+      },
+    ]);
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        output_text: JSON.stringify({
+          ...validDecision,
+          reply: 'Según la información disponible, los chatbots empiezan desde 300€ cuando el alcance es básico.',
+          usedKnowledgeIds: ['faq-price'],
+        }),
+      }),
+    }) as unknown as typeof fetch;
+
+    const decision = await service.decide({
+      companyId: 'company-1',
+      conversationId: 'conversation-1',
+      body: '¿Cuánto cuesta un chatbot?',
+      config: testCompanyConfig,
+      activeFlow: null,
+    });
+
+    expect(decision?.reply).toContain('300€');
+    expect(decision?.usedKnowledgeIds).toEqual(['faq-price']);
+  });
+
+  it('routes explicit human requests without calling OpenAI', async () => {
+    const decision = await service.decide({
+      companyId: 'company-1',
+      conversationId: 'conversation-1',
+      body: 'quiero hablar con una persona',
+      config: testCompanyConfig,
+      activeFlow: null,
+    });
+
+    expect(decision).toEqual({
+      reply: testCompanyConfig.messages.humanHandoff,
+      intent: ConversationIntent.human_support,
+      status: ConversationStatus.needs_human,
+      confidence: 1,
+      shouldStartFlow: false,
+      flowKey: null,
+      collectedDataPatch: {},
+      needsHuman: true,
+      reason: 'El usuario pidió explícitamente hablar con una persona.',
+      usedKnowledgeIds: [],
+    });
+    expect(global.fetch).not.toHaveBeenCalled();
+  });
+
+  it('returns null when the AI agent is disabled', async () => {
+    config.get.mockImplementation((key: string) => {
+      if (key === 'AI_AGENT_ENABLED') {
+        return false;
+      }
+
+      return '';
+    });
+
+    const decision = await service.decide({
+      companyId: 'company-1',
+      conversationId: 'conversation-1',
+      body: 'hola',
+      config: testCompanyConfig,
+      activeFlow: null,
+    });
+
+    expect(decision).toBeNull();
+    expect(global.fetch).not.toHaveBeenCalled();
+  });
+});
