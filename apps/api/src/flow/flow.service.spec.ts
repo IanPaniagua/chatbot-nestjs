@@ -305,6 +305,51 @@ describe('FlowService', () => {
     expect(aiAgent.decide).not.toHaveBeenCalled();
   });
 
+  it('does not hand off when a person is mentioned as a chatbot routing requirement', async () => {
+    prisma.flowSession.findUnique.mockResolvedValue(null);
+    aiAgent.decide.mockResolvedValueOnce({
+      reply:
+        'Eso encaja con un chatbot de WhatsApp con rutas por intención. ¿Qué necesidades quieres distinguir y a qué URL o persona debería ir cada una?',
+      intent: ConversationIntent.special_order,
+      status: ConversationStatus.open,
+      confidence: 0.9,
+      shouldStartFlow: false,
+      flowKey: null,
+      recommendedService: 'whatsapp_chatbot',
+      qualificationStage: 'discovery',
+      leadTag: 'service:whatsapp_chatbot',
+      collectedDataPatch: {
+        channel: 'whatsapp',
+        requirement: 'redirigir según necesidad a URLs o persona real',
+      },
+      needsHuman: false,
+      reason: 'Requisito funcional de chatbot, no solicitud de handoff.',
+      usedKnowledgeIds: [],
+    });
+
+    const result = await service.routeInbound({
+      companyId: 'company-1',
+      conversationId: 'conversation-1',
+      contactId: 'contact-1',
+      channel: 'whatsapp',
+      from: 'whatsapp:+1',
+      body: 'Para que sea en whatsap y redirija según necesidad a diferentes URL o a una persona real',
+    });
+
+    expect(result.intent).toBe(ConversationIntent.special_order);
+    expect(result.status).toBe(ConversationStatus.open);
+    expect(result.decision).toBe('ai_agent');
+    expect(result.reply).toContain('rutas por intención');
+    expect(result.summary?.collectedData).toEqual(
+      expect.objectContaining({
+        recommendedService: 'whatsapp_chatbot',
+        qualificationStage: 'discovery',
+        leadTag: 'service:whatsapp_chatbot',
+      }),
+    );
+    expect(aiAgent.decide).toHaveBeenCalled();
+  });
+
   it('starts a structured flow for special orders', async () => {
     prisma.flowSession.findUnique.mockResolvedValue(null);
 

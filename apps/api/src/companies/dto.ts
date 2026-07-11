@@ -154,4 +154,8 @@ export class UpdateCompanySettingsDto {
   @IsOptional()
   @IsString()
   faqSeed?: string;
+
+  @IsOptional()
+  @IsString()
+  serviceCatalogJson?: string;
 }

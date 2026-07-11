@@ -20,6 +20,9 @@ export interface AiAgentDecision {
   confidence: number;
   shouldStartFlow: boolean;
   flowKey: string | null;
+  recommendedService: string | null;
+  qualificationStage: 'discovery' | 'qualified' | 'handoff_ready' | 'not_fit' | 'unknown';
+  leadTag: string | null;
   collectedDataPatch: Record<string, unknown>;
   needsHuman: boolean;
   reason: string;

@@ -26,11 +26,23 @@ export interface CompanyBotConfig {
   websiteUrl?: string;
   instagramUrl?: string;
   internalEmail?: string;
+  serviceCatalog?: ServiceCatalogItem[];
   locations: CompanyLocation[];
   faqs: KnowledgeBaseItem[];
   flows: Record<string, FlowDefinition>;
   routingKeywords: Record<string, string[]>;
   messages: BotMessages;
+}
+
+export interface ServiceCatalogItem {
+  key: string;
+  name: string;
+  description: string;
+  bestFor: string[];
+  notFor?: string[];
+  qualificationQuestions: string[];
+  requiredData: string[];
+  leadTag: string;
 }
 
 export interface CompanyLocation {

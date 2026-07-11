@@ -7,6 +7,17 @@ export const testCompanyConfig: CompanyBotConfig = {
   websiteUrl: 'https://example.com',
   internalEmail: 'ops@example.com',
   locations: [{ name: 'Central' }],
+  serviceCatalog: [
+    {
+      key: 'whatsapp_chatbot',
+      name: 'Chatbot de WhatsApp',
+      description: 'Chatbot para WhatsApp con rutas por intención y derivación a enlaces o personas.',
+      bestFor: ['consultas por WhatsApp', 'rutas por necesidad'],
+      qualificationQuestions: ['¿Qué rutas debe distinguir?'],
+      requiredData: ['rutas', 'datos a recoger'],
+      leadTag: 'service:whatsapp_chatbot',
+    },
+  ],
   routingKeywords: {
     normal_order: ['pedido normal', 'comprar'],
     special_order: ['tarta', 'comunion', 'boda'],

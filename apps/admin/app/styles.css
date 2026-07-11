@@ -200,6 +200,13 @@ button,
   margin-bottom: 18px;
 }
 
+.lead-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
 .info-box,
 .summary-card,
 .data-card {
@@ -216,6 +223,11 @@ button,
 
 .info-box strong {
   overflow-wrap: anywhere;
+}
+
+.lead-box {
+  border-color: #b9c8d4;
+  background: #f4f9fc;
 }
 
 .summary-card,
@@ -425,6 +437,7 @@ button,
   .onboarding-form,
   .settings-section,
   .detail-grid,
+  .lead-grid,
   .data-row {
     grid-template-columns: 1fr;
   }

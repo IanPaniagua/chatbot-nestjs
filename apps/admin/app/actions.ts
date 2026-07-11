@@ -162,6 +162,7 @@ export async function updateCompanySettings(formData: FormData) {
       faqKeywords: String(formData.get('faqKeywords') || '').trim(),
       humanSupportKeywords: String(formData.get('humanSupportKeywords') || '').trim(),
       faqSeed: String(formData.get('faqSeed') || '').trim(),
+      serviceCatalogJson: String(formData.get('serviceCatalogJson') || '').trim(),
     }),
   });
 

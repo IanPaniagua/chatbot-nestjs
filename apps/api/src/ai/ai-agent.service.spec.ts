@@ -23,6 +23,9 @@ describe('AiAgentService', () => {
     confidence: 0.87,
     shouldStartFlow: false,
     flowKey: null,
+    recommendedService: 'whatsapp_chatbot',
+    qualificationStage: 'discovery',
+    leadTag: 'service:whatsapp_chatbot',
     collectedDataPatch: { need: 'chatbot inteligente' },
     needsHuman: false,
     reason: 'La IA entendió una consulta comercial.',
@@ -116,6 +119,34 @@ describe('AiAgentService', () => {
     expect(systemPrompt).toContain('Sí, diseñamos chatbots para webs y WhatsApp.');
     expect(systemPrompt).toContain('Tu alcance es estricto');
     expect(systemPrompt).toContain('No inventes precios');
+    expect(systemPrompt).toContain('Catálogo de servicios autorizado');
+    expect(systemPrompt).toContain('whatsapp_chatbot');
+  });
+
+  it('normalizes recommended service and lead tag from the authorized catalog', async () => {
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        output_text: JSON.stringify({
+          ...validDecision,
+          intent: ConversationIntent.unknown,
+          recommendedService: 'whatsapp_chatbot',
+          leadTag: 'wrong-tag',
+        }),
+      }),
+    }) as unknown as typeof fetch;
+
+    const decision = await service.decide({
+      companyId: 'company-1',
+      conversationId: 'conversation-1',
+      body: 'Necesito un chatbot de WhatsApp',
+      config: testCompanyConfig,
+      activeFlow: null,
+    });
+
+    expect(decision?.recommendedService).toBe('whatsapp_chatbot');
+    expect(decision?.intent).toBe(ConversationIntent.special_order);
+    expect(decision?.leadTag).toBe('service:whatsapp_chatbot');
   });
 
   it('rejects unsupported price claims from the AI response', async () => {
@@ -189,6 +220,9 @@ describe('AiAgentService', () => {
       confidence: 1,
       shouldStartFlow: false,
       flowKey: null,
+      recommendedService: null,
+      qualificationStage: 'handoff_ready',
+      leadTag: 'human_support',
       collectedDataPatch: {},
       needsHuman: true,
       reason: 'El usuario pidió explícitamente hablar con una persona.',

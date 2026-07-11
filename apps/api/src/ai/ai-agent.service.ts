@@ -23,6 +23,9 @@ const aiDecisionSchema = z.object({
   confidence: z.number().min(0).max(1),
   shouldStartFlow: z.boolean(),
   flowKey: z.string().nullable(),
+  recommendedService: z.string().nullable(),
+  qualificationStage: z.enum(['discovery', 'qualified', 'handoff_ready', 'not_fit', 'unknown']),
+  leadTag: z.string().nullable(),
   collectedDataPatch: z.record(z.unknown()),
   needsHuman: z.boolean(),
   reason: z.string().min(1).max(600),
@@ -110,7 +113,7 @@ export class AiAgentService {
         return null;
       }
 
-      const normalizedDecision = this.normalizeDecision(decision, knowledge);
+      const normalizedDecision = this.normalizeDecision(decision, knowledge, input);
       if (!this.isDecisionWithinScope(normalizedDecision, knowledge)) {
         this.logger.warn('AI agent produced an unsupported business claim; falling back to deterministic flow.');
         return null;
@@ -163,6 +166,10 @@ export class AiAgentService {
       'Responde siempre en español natural, breve y útil para WhatsApp.',
       'Tu objetivo es entender la necesidad, orientar y recoger el siguiente dato útil sin sonar como un formulario.',
       'Tu alcance es estricto: puedes conversar de forma natural para entender la necesidad, pero solo puedes afirmar información concreta del negocio si aparece en la configuración o en el conocimiento autorizado.',
+      'Recomienda servicios solo desde el catálogo autorizado. Si ninguno encaja, recommendedService=null y qualificationStage="discovery" o "unknown".',
+      'Si un servicio encaja, explica por qué de forma breve, haz una sola pregunta útil de cualificación y rellena recommendedService con la key del servicio.',
+      'Si recomiendas un servicio para una posible propuesta o lead comercial, usa intent="special_order" salvo que el usuario esté pidiendo explícitamente soporte humano.',
+      'No cierres la conversación ni derives a humano solo porque el usuario mencione que el chatbot debe derivar a una persona; eso es un requisito funcional, no una petición de hablar con humano ahora.',
       'No inventes precios, rangos de precios, plazos, disponibilidad, garantías, descuentos, políticas, capacidades técnicas específicas ni servicios concretos.',
       'Si el usuario pide precio, plazo o detalle no incluido en el conocimiento autorizado, explica que depende del alcance o que no quieres inventarlo, y pide el contexto mínimo para que el equipo lo revise.',
       'No hables como ChatGPT general. No des tutoriales largos ni explicaciones abiertas salvo que ayuden a cualificar la solicitud del cliente.',
@@ -177,6 +184,9 @@ export class AiAgentService {
       `Flujos disponibles: ${Object.keys(config.flows).join(', ')}`,
       `Estado de flujo activo: ${input.activeFlow ? JSON.stringify(input.activeFlow) : 'ninguno'}`,
       '',
+      'Catálogo de servicios autorizado:',
+      JSON.stringify(config.serviceCatalog ?? [], null, 2),
+      '',
       'Conocimiento autorizado:',
       knowledge.length > 0 ? JSON.stringify(knowledge, null, 2) : '[]',
       '',
@@ -185,6 +195,9 @@ export class AiAgentService {
       '- status debe ser open, waiting_customer, needs_human o closed.',
       '- shouldStartFlow=true solo si vas a abrir/continuar un flujo estructurado.',
       '- flowKey debe ser special_order, restaurant_order, faq o null.',
+      '- recommendedService debe ser una key del catálogo autorizado o null.',
+      '- qualificationStage debe indicar discovery, qualified, handoff_ready, not_fit o unknown.',
+      '- leadTag debe ser el leadTag del servicio recomendado o null.',
       '- collectedDataPatch solo contiene datos que el usuario haya dado explícitamente.',
       '- usedKnowledgeIds contiene ids de conocimiento usados para responder.',
       '- Si respondes con una afirmación concreta tomada de conocimiento autorizado, incluye su id en usedKnowledgeIds.',
@@ -239,8 +252,11 @@ export class AiAgentService {
   private normalizeDecision(
     decision: AiAgentDecision,
     knowledge: KnowledgePromptItem[],
+    input: AiAgentInput,
   ): AiAgentDecision {
     const allowedKnowledgeIds = new Set(knowledge.map((item) => item.id));
+    const serviceCatalog = input.config.serviceCatalog ?? [];
+    const recommendedService = serviceCatalog.find((service) => service.key === decision.recommendedService);
     const validFlowKey = ['special_order', 'restaurant_order', 'faq'].includes(decision.flowKey ?? '')
       ? decision.flowKey
       : null;
@@ -248,6 +264,10 @@ export class AiAgentService {
     return {
       ...decision,
       reply: decision.reply.trim(),
+      intent:
+        recommendedService && decision.intent === ConversationIntent.unknown
+          ? ConversationIntent.special_order
+          : decision.intent,
       needsHuman: decision.needsHuman || decision.intent === ConversationIntent.human_support,
       status:
         decision.needsHuman || decision.intent === ConversationIntent.human_support
@@ -255,6 +275,8 @@ export class AiAgentService {
           : decision.status,
       shouldStartFlow: decision.shouldStartFlow && Boolean(validFlowKey),
       flowKey: validFlowKey,
+      recommendedService: recommendedService?.key ?? null,
+      leadTag: recommendedService ? recommendedService.leadTag : null,
       usedKnowledgeIds: decision.usedKnowledgeIds.filter((id) => allowedKnowledgeIds.has(id)),
     };
   }
@@ -307,6 +329,9 @@ export class AiAgentService {
       confidence: 1,
       shouldStartFlow: false,
       flowKey: null,
+      recommendedService: null,
+      qualificationStage: 'handoff_ready',
+      leadTag: 'human_support',
       collectedDataPatch: {},
       needsHuman: true,
       reason: 'El usuario pidió explícitamente hablar con una persona.',
@@ -333,6 +358,9 @@ export class AiAgentService {
         'confidence',
         'shouldStartFlow',
         'flowKey',
+        'recommendedService',
+        'qualificationStage',
+        'leadTag',
         'collectedDataPatch',
         'needsHuman',
         'reason',
@@ -351,6 +379,12 @@ export class AiAgentService {
         confidence: { type: 'number', minimum: 0, maximum: 1 },
         shouldStartFlow: { type: 'boolean' },
         flowKey: { type: ['string', 'null'] },
+        recommendedService: { type: ['string', 'null'] },
+        qualificationStage: {
+          type: 'string',
+          enum: ['discovery', 'qualified', 'handoff_ready', 'not_fit', 'unknown'],
+        },
+        leadTag: { type: ['string', 'null'] },
         collectedDataPatch: {
           type: 'object',
           additionalProperties: true,

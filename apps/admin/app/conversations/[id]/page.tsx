@@ -39,6 +39,7 @@ export default async function ConversationPage({ params, searchParams }: PagePro
   }
 
   const collectedEntries = getCollectedDataEntries(conversation.collectedData);
+  const leadMeta = getLeadMeta(conversation.collectedData);
   const summaryText = buildCopySummary(conversation, collectedEntries);
 
   return (
@@ -92,6 +93,29 @@ export default async function ConversationPage({ params, searchParams }: PagePro
             <strong>{new Date(conversation.updatedAt).toLocaleString('es-ES')}</strong>
           </article>
         </section>
+
+        {leadMeta ? (
+          <section className="lead-grid">
+            {leadMeta.recommendedService ? (
+              <article className="info-box lead-box">
+                <span className="muted">Servicio recomendado</span>
+                <strong>{leadMeta.recommendedService}</strong>
+              </article>
+            ) : null}
+            {leadMeta.qualificationStage ? (
+              <article className="info-box lead-box">
+                <span className="muted">Etapa</span>
+                <strong>{leadMeta.qualificationStage}</strong>
+              </article>
+            ) : null}
+            {leadMeta.leadTag ? (
+              <article className="info-box lead-box">
+                <span className="muted">Tag</span>
+                <strong>{leadMeta.leadTag}</strong>
+              </article>
+            ) : null}
+          </section>
+        ) : null}
 
         <section className="summary-card">
           <div className="section-header">
@@ -195,13 +219,17 @@ const DATA_LABELS: Record<string, string> = {
   date: 'Fecha',
   deliveryDate: 'Fecha/hora',
   flavor: 'Sabor',
+  goal: 'Objetivo',
   items: 'Productos y cantidades',
+  leadTag: 'Tag del lead',
   need: 'Necesidad',
   notes: 'Observaciones',
   patientName: 'Paciente',
   pickupDate: 'Fecha de recogida',
   pickupLocation: 'Tienda de recogida',
   preferredDate: 'Fecha preferida',
+  qualificationStage: 'Etapa de cualificación',
+  recommendedService: 'Servicio recomendado',
   request: 'Solicitud',
   service: 'Servicio',
   servings: 'Personas',
@@ -209,6 +237,22 @@ const DATA_LABELS: Record<string, string> = {
   urgency: 'Urgencia',
   volume: 'Volumen/frecuencia',
 };
+
+function getLeadMeta(data?: Record<string, unknown> | null) {
+  if (!data) {
+    return null;
+  }
+
+  const recommendedService = data.recommendedService ? formatValue(data.recommendedService) : '';
+  const qualificationStage = data.qualificationStage ? formatValue(data.qualificationStage) : '';
+  const leadTag = data.leadTag ? formatValue(data.leadTag) : '';
+
+  if (!recommendedService && !qualificationStage && !leadTag) {
+    return null;
+  }
+
+  return { recommendedService, qualificationStage, leadTag };
+}
 
 function getCollectedDataEntries(data?: Record<string, unknown> | null) {
   if (!data) {

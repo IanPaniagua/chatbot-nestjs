@@ -239,6 +239,9 @@ export class FlowService {
     const collectedData = {
       ...existingData,
       ...(decision.collectedDataPatch ?? {}),
+      ...(decision.recommendedService ? { recommendedService: decision.recommendedService } : {}),
+      ...(decision.qualificationStage ? { qualificationStage: decision.qualificationStage } : {}),
+      ...(decision.leadTag ? { leadTag: decision.leadTag } : {}),
     };
 
     if (flowKey && config.flows[flowKey]) {
@@ -850,23 +853,30 @@ export class FlowService {
   }
 
   private matchesExplicitHumanSupport(normalizedBody: string, keywords: string[]): boolean {
-    const explicitTerms = [
-      'persona',
-      'humano',
-      'agente',
-      'asesor',
-      'operador',
-      'equipo',
-      'alguien',
-      'atencion',
-      'recepcion',
-    ];
-
-    if (explicitTerms.some((term) => normalizedBody.includes(term))) {
-      return this.matchesAny(normalizedBody, keywords) || this.includesHumanSupportPhrase(normalizedBody);
+    if (this.includesHumanSupportPhrase(normalizedBody)) {
+      return true;
     }
 
-    return this.includesHumanSupportPhrase(normalizedBody);
+    if (!this.matchesAny(normalizedBody, keywords)) {
+      return false;
+    }
+
+    return [
+      'necesito hablar',
+      'quiero hablar',
+      'puedo hablar',
+      'hablar ahora',
+      'me puede llamar',
+      'me puedes llamar',
+      'llamadme',
+      'llamenme',
+      'llámenme',
+      'atencion humana',
+      'atención humana',
+      'soporte humano',
+      'agente humano',
+      'persona del equipo',
+    ].some((phrase) => normalizedBody.includes(this.normalize(phrase)));
   }
 
   private includesHumanSupportPhrase(normalizedBody: string): boolean {
@@ -880,7 +890,10 @@ export class FlowService {
       'me atienda una persona',
       'me atienda alguien',
       'pasame con',
+      'pásame con',
       'pasar con',
+      'conectame con',
+      'conéctame con',
     ].some((phrase) => normalizedBody.includes(phrase));
   }
 

@@ -282,6 +282,21 @@ export default async function CompanySettingsPage({ params, searchParams }: Page
             </p>
           </section>
 
+          <section className="settings-section">
+            <h2>Catálogo de servicios</h2>
+            <label className="wide-field">
+              Servicios autorizados para la IA
+              <textarea
+                name="serviceCatalogJson"
+                rows={18}
+                defaultValue={formatServiceCatalog(settings.serviceCatalog)}
+              />
+            </label>
+            <p className="muted wide-field">
+              JSON editable. La IA solo debe recomendar servicios definidos aquí.
+            </p>
+          </section>
+
           <div className="form-footer">
             <span className="muted">Los cambios se aplican al bot y a la base de conocimiento.</span>
             <button type="submit">Guardar configuración</button>
@@ -310,4 +325,8 @@ function formatFlowFields(fields?: CompanyDetail['config']['settings']['flows'][
         .join('|'),
     )
     .join('\n');
+}
+
+function formatServiceCatalog(catalog?: CompanyDetail['config']['settings']['serviceCatalog']) {
+  return JSON.stringify(catalog ?? [], null, 2);
 }

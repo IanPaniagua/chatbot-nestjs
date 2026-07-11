@@ -143,6 +143,7 @@ export class CompaniesService {
         faq: parseKeywordList(input.faqKeywords),
         human_support: parseKeywordList(input.humanSupportKeywords),
       },
+      serviceCatalog: parseServiceCatalogJson(input.serviceCatalogJson, currentConfig.serviceCatalog),
       flows: {
         ...currentConfig.flows,
         special_order: buildEditableFlow(currentConfig.flows.special_order, {
@@ -394,6 +395,66 @@ function parseKeywordList(value?: string) {
       .filter(Boolean) ?? [];
 
   return Array.from(new Set(keywords));
+}
+
+function parseServiceCatalogJson(
+  value: string | undefined,
+  fallback: CompanyBotConfig['serviceCatalog'],
+): CompanyBotConfig['serviceCatalog'] {
+  const trimmed = value?.trim();
+  if (!trimmed) {
+    return fallback ?? [];
+  }
+
+  try {
+    const parsed = JSON.parse(trimmed);
+    if (!Array.isArray(parsed)) {
+      return fallback ?? [];
+    }
+
+    return parsed
+      .map((item) => normalizeServiceCatalogItem(item))
+      .filter((item): item is NonNullable<CompanyBotConfig['serviceCatalog']>[number] => Boolean(item));
+  } catch {
+    return fallback ?? [];
+  }
+}
+
+function normalizeServiceCatalogItem(item: unknown): NonNullable<CompanyBotConfig['serviceCatalog']>[number] | null {
+  if (!item || typeof item !== 'object') {
+    return null;
+  }
+
+  const raw = item as Record<string, unknown>;
+  const key = cleanOptional(String(raw.key ?? ''));
+  const name = cleanOptional(String(raw.name ?? ''));
+  const description = cleanOptional(String(raw.description ?? ''));
+  const leadTag = cleanOptional(String(raw.leadTag ?? ''));
+
+  if (!key || !name || !description || !leadTag) {
+    return null;
+  }
+
+  return {
+    key,
+    name,
+    description,
+    bestFor: stringArray(raw.bestFor),
+    notFor: stringArray(raw.notFor),
+    qualificationQuestions: stringArray(raw.qualificationQuestions),
+    requiredData: stringArray(raw.requiredData),
+    leadTag,
+  };
+}
+
+function stringArray(value: unknown): string[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .map((item) => String(item).trim())
+    .filter(Boolean);
 }
 
 function keywordCandidates(text: string) {
