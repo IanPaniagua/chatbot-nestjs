@@ -53,7 +53,12 @@ const baseWhatsAppConfig: CompanyBotConfig = {
       requiredFields: [
         { key: 'need', label: 'Necesidad', prompt: '¿Qué necesitas exactamente?' },
         { key: 'date', label: 'Fecha', prompt: '¿Para qué fecha lo necesitas?' },
-        { key: 'budget', label: 'Presupuesto', prompt: '¿Tienes un presupuesto aproximado?' },
+        {
+          key: 'budget',
+          label: 'Presupuesto',
+          prompt: '¿Tienes un presupuesto aproximado?',
+          options: ['Todavía no lo sé', 'Menos de 500 €', '500-1.500 €', 'Más de 1.500 €'],
+        },
         { key: 'contactName', label: 'Contacto', prompt: '¿A nombre de quién dejamos la solicitud?' },
         {
           key: 'notes',
@@ -72,7 +77,12 @@ const baseWhatsAppConfig: CompanyBotConfig = {
         { key: 'businessName', label: 'Empresa', prompt: '¿Cuál es el nombre de la empresa?' },
         { key: 'contactName', label: 'Contacto', prompt: '¿Quién es la persona de contacto?' },
         { key: 'request', label: 'Solicitud', prompt: 'Cuéntame qué necesitáis, por favor.' },
-        { key: 'volume', label: 'Volumen', prompt: '¿Qué volumen o frecuencia aproximada tenéis en mente?' },
+        {
+          key: 'volume',
+          label: 'Volumen',
+          prompt: '¿Qué volumen o frecuencia aproximada tenéis en mente?',
+          options: ['Puntual', 'Semanal', 'Mensual', 'Todavía por definir'],
+        },
         {
           key: 'notes',
           label: 'Observaciones',
@@ -145,8 +155,18 @@ const beinettiConfig: CompanyBotConfig = {
         'Perfecto. Para preparar la solicitud de una tarta especial necesito algunos datos.',
       requiredFields: [
         { key: 'pickupDate', label: 'Fecha de recogida', prompt: '¿Para qué fecha la necesitas?' },
-        { key: 'pickupLocation', label: 'Tienda', prompt: '¿En qué tienda quieres recogerla?' },
-        { key: 'servings', label: 'Personas', prompt: '¿Para cuántas personas sería?' },
+        {
+          key: 'pickupLocation',
+          label: 'Tienda',
+          prompt: '¿En qué tienda quieres recogerla?',
+          options: ['Tienda 1', 'Tienda 2', 'Todavía no lo sé'],
+        },
+        {
+          key: 'servings',
+          label: 'Personas',
+          prompt: '¿Para cuántas personas sería?',
+          options: ['10-15 personas', '20-25 personas', '30-40 personas', 'Más de 40 personas'],
+        },
         { key: 'flavor', label: 'Sabor', prompt: '¿Tienes algún sabor preferido?' },
         { key: 'theme', label: 'Temática', prompt: '¿Qué temática o estilo te gustaría?' },
         {
@@ -166,7 +186,12 @@ const beinettiConfig: CompanyBotConfig = {
         { key: 'businessName', label: 'Restaurante', prompt: '¿Cuál es el nombre del restaurante?' },
         { key: 'contactName', label: 'Contacto', prompt: '¿Quién es la persona de contacto?' },
         { key: 'items', label: 'Pedido', prompt: 'Indica productos y cantidades, por favor.' },
-        { key: 'deliveryDate', label: 'Fecha', prompt: '¿Para qué fecha/hora lo necesitas?' },
+        {
+          key: 'deliveryDate',
+          label: 'Fecha',
+          prompt: '¿Para qué fecha/hora lo necesitas?',
+          options: ['Esta semana', 'La próxima semana', 'Este mes', 'Fecha por definir'],
+        },
         {
           key: 'notes',
           label: 'Observaciones',
@@ -488,9 +513,29 @@ const techPresenceConfig: CompanyBotConfig = {
       welcome: 'Perfecto. Para preparar una primera orientación necesito algunos datos.',
       requiredFields: [
         { key: 'business', label: 'Negocio', prompt: '¿Qué tipo de negocio o proyecto tienes?' },
-        { key: 'goal', label: 'Objetivo', prompt: '¿Qué quieres mejorar ahora mismo?' },
-        { key: 'currentPresence', label: 'Situación actual', prompt: '¿Tienes web, redes o algún sistema funcionando ya?' },
-        { key: 'timeline', label: 'Plazo', prompt: '¿Tienes algún plazo o urgencia?' },
+        {
+          key: 'goal',
+          label: 'Objetivo',
+          prompt: '¿Qué quieres mejorar ahora mismo?',
+          options: [
+            'Conseguir más contactos desde la web',
+            'Automatizar respuestas o leads',
+            'Mejorar claridad y confianza online',
+            'No lo tengo claro, quiero orientación',
+          ],
+        },
+        {
+          key: 'currentPresence',
+          label: 'Situación actual',
+          prompt: '¿Tienes web, redes o algún sistema funcionando ya?',
+          options: ['Tengo web', 'Tengo redes pero poca web', 'Uso WhatsApp/manual', 'Estoy empezando desde cero'],
+        },
+        {
+          key: 'timeline',
+          label: 'Plazo',
+          prompt: '¿Tienes algún plazo o urgencia?',
+          options: ['Lo antes posible', 'Este mes', 'En 1-3 meses', 'Sin urgencia'],
+        },
         {
           key: 'notes',
           label: 'Observaciones',

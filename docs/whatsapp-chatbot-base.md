@@ -12,6 +12,8 @@ Este repo ya funciona como base reutilizable para crear chatbots de WhatsApp par
 - Opciones guiadas para meter al cliente en el funnel sin preguntas demasiado abiertas.
 - Clasificación inicial por palabras clave configurables como fallback.
 - Flujos conversacionales para recoger datos paso a paso.
+- Opciones rapidas numeradas dentro de campos de flujo.
+- Resumen final revisable antes de enviar una solicitud al equipo.
 - FAQ por configuración y por base de conocimiento.
 - Derivación a humano cuando el bot no debe cerrar la conversación.
 - Panel interno para revisar conversaciones.
@@ -120,6 +122,7 @@ El script envía el mismo formato `application/x-www-form-urlencoded` que usa Tw
 - Keywords de clasificación fallback.
 - Preguntas frecuentes.
 - Campos de cada flujo.
+- Opciones rapidas de cada campo de flujo.
 - Reglas de derivación humana.
 - Integraciones reales: CRM, POS, email, calendario, pagos o ERP.
 

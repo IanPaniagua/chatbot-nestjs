@@ -591,7 +591,9 @@ export class FlowService {
     });
 
     return {
-      reply: `${config.messages.flowContinuePrefix ?? 'Perfecto, seguimos.'}\n\n${prompt}`,
+      reply: `${config.messages.flowContinuePrefix ?? 'Perfecto, seguimos.'}\n\n${
+        currentField ? this.formatFieldPrompt(currentField) : prompt
+      }`,
       intent,
       status: ConversationStatus.waiting_customer,
       decision: `repeat_flow_prompt:${session.flowKey}`,
@@ -655,7 +657,7 @@ export class FlowService {
     });
 
     return {
-      reply: `${flow.welcome}\n\n${firstField.prompt}`,
+      reply: `${flow.welcome}\n\n${this.formatFieldPrompt(firstField)}`,
       intent,
       status: ConversationStatus.waiting_customer,
       decision: `start_flow:${flowKey}`,
@@ -670,9 +672,13 @@ export class FlowService {
   ): Promise<RoutingResult> {
     const flow = config.flows[session.flowKey];
     const currentField = flow.requiredFields[session.currentStep];
+    if (!currentField) {
+      return this.handleFlowReviewResponse(input, flow, session);
+    }
+
     const collectedData = {
       ...(session.collectedData ?? {}),
-      [currentField.key]: input.body.trim(),
+      [currentField.key]: this.normalizeFieldAnswer(currentField, input.body),
     };
     const nextStep = session.currentStep + 1;
     const nextField = flow.requiredFields[nextStep];
@@ -697,7 +703,7 @@ export class FlowService {
       });
 
       return {
-        reply: nextField.prompt,
+        reply: this.formatFieldPrompt(nextField),
         intent,
         status: ConversationStatus.waiting_customer,
         decision: `continue_flow:${session.flowKey}`,
@@ -708,6 +714,107 @@ export class FlowService {
           this.missingFields(flow, collectedData),
           nextField.prompt,
         ),
+      };
+    }
+
+    await this.prisma.flowSession.update({
+      where: { conversationId: input.conversationId },
+      data: {
+        currentStep: nextStep,
+        collectedData,
+      },
+    });
+
+    const summary = this.buildSummary(
+      intent,
+      ConversationStatus.waiting_customer,
+      collectedData,
+      [],
+      this.formatCollectedData(flow, collectedData),
+    );
+
+    await this.prisma.conversation.update({
+      where: { id: input.conversationId },
+      data: {
+        intent,
+        status: ConversationStatus.waiting_customer,
+        collectedData,
+        summary: summary.humanReadableSummary,
+      },
+    });
+
+    return {
+      reply: this.formatReviewPrompt(flow, collectedData),
+      intent,
+      status: ConversationStatus.waiting_customer,
+      decision: `review_flow:${session.flowKey}`,
+      summary,
+    };
+  }
+
+  private async handleFlowReviewResponse(
+    input: RouteInboundInput,
+    flow: FlowDefinition,
+    session: { flowKey: string; currentStep: number; collectedData: any },
+  ): Promise<RoutingResult> {
+    const intent = session.flowKey as ConversationIntent;
+    const collectedData = session.collectedData ?? {};
+    const correction = this.parseReviewCorrection(flow, input.body);
+
+    if (correction) {
+      const updatedData = {
+        ...collectedData,
+        [correction.field.key]: correction.value,
+      };
+      const summary = this.buildSummary(
+        intent,
+        ConversationStatus.waiting_customer,
+        updatedData,
+        [],
+        this.formatCollectedData(flow, updatedData),
+      );
+
+      await this.prisma.flowSession.update({
+        where: { conversationId: input.conversationId },
+        data: { collectedData: updatedData },
+      });
+
+      await this.prisma.conversation.update({
+        where: { id: input.conversationId },
+        data: {
+          intent,
+          status: ConversationStatus.waiting_customer,
+          collectedData: updatedData,
+          summary: summary.humanReadableSummary,
+        },
+      });
+
+      return {
+        reply: this.formatReviewPrompt(flow, updatedData, 'He actualizado el dato. Revísalo otra vez:'),
+        intent,
+        status: ConversationStatus.waiting_customer,
+        decision: `review_flow_update:${session.flowKey}:${correction.field.key}`,
+        summary,
+      };
+    }
+
+    if (!this.isFlowSubmitConfirmation(input.body)) {
+      const summary = this.buildSummary(
+        intent,
+        ConversationStatus.waiting_customer,
+        collectedData,
+        [],
+        this.formatCollectedData(flow, collectedData),
+      );
+
+      return {
+        reply:
+          `${this.formatReviewPrompt(flow, collectedData, 'Antes de enviarlo necesito tu confirmación.')}\n\n` +
+          'Si quieres corregir algo, responde por ejemplo: "Fecha: 12 de agosto".',
+        intent,
+        status: ConversationStatus.waiting_customer,
+        decision: `review_flow_waiting_confirmation:${session.flowKey}`,
+        summary,
       };
     }
 
@@ -722,7 +829,6 @@ export class FlowService {
     await this.prisma.flowSession.update({
       where: { conversationId: input.conversationId },
       data: {
-        currentStep: nextStep,
         collectedData,
         completedAt: new Date(),
       },
@@ -793,10 +899,89 @@ export class FlowService {
 
   private formatCollectedData(flow: FlowDefinition, data: Record<string, unknown>): string {
     const lines = flow.requiredFields
-      .map((field: FlowField) => `- ${field.label}: ${data[field.key] ?? 'Pendiente'}`)
-      .join('\n');
+      .map((field: FlowField) => `${field.label}\n${data[field.key] ?? 'Pendiente'}`)
+      .join('\n\n');
 
-    return `Resumen estructurado:\n${lines}`;
+    return `Resumen de la solicitud:\n\n${lines}`;
+  }
+
+  private formatReviewPrompt(
+    flow: FlowDefinition,
+    data: Record<string, unknown>,
+    intro = 'Super, ya tengo los datos principales. Revisa que esté todo bien:',
+  ): string {
+    return [
+      intro,
+      '',
+      this.formatCollectedData(flow, data),
+      '',
+      'Si todo está correcto, responde "enviar".',
+      'Si quieres corregir algo, responde con el campo y el nuevo valor. Ejemplo: "Fecha: 12 de agosto".',
+    ].join('\n');
+  }
+
+  private formatFieldPrompt(field: FlowField): string {
+    const options = field.options?.filter(Boolean) ?? [];
+    if (options.length === 0) {
+      return field.prompt;
+    }
+
+    const optionLines = options.map((option, index) => `${index + 1}. ${option}`).join('\n');
+    return `${field.prompt}\n\nRespuesta rápida:\n${optionLines}\n\nPuedes responder con el número o escribirlo con tus palabras.`;
+  }
+
+  private normalizeFieldAnswer(field: FlowField, body: string): string {
+    const trimmed = body.trim();
+    const options = field.options?.filter(Boolean) ?? [];
+    if (options.length === 0) {
+      return trimmed;
+    }
+
+    const numberMatch = trimmed.match(/^\s*(\d+)/);
+    const selectedIndex = numberMatch ? Number(numberMatch[1]) - 1 : -1;
+    if (selectedIndex >= 0 && selectedIndex < options.length) {
+      return options[selectedIndex];
+    }
+
+    const normalized = this.normalize(trimmed);
+    const matchingOption = options.find((option) => this.normalize(option) === normalized);
+    return matchingOption ?? trimmed;
+  }
+
+  private parseReviewCorrection(flow: FlowDefinition, body: string): { field: FlowField; value: string } | null {
+    const match = body.trim().match(/^([^:：]+)[:：]\s*(.+)$/);
+    if (!match) {
+      return null;
+    }
+
+    const fieldName = this.normalize(match[1]);
+    const field = flow.requiredFields.find(
+      (candidate) => this.normalize(candidate.key) === fieldName || this.normalize(candidate.label) === fieldName,
+    );
+    const value = match[2]?.trim();
+
+    if (!field || !value) {
+      return null;
+    }
+
+    return { field, value: this.normalizeFieldAnswer(field, value) };
+  }
+
+  private isFlowSubmitConfirmation(body: string): boolean {
+    const normalized = this.normalize(body);
+    return [
+      'enviar',
+      'enviar solicitud',
+      'confirmar',
+      'confirmo',
+      'correcto',
+      'todo correcto',
+      'esta correcto',
+      'está correcto',
+      'ok enviar',
+      'submit',
+      'bewerbung senden',
+    ].some((phrase) => normalized.includes(this.normalize(phrase)));
   }
 
   private formatOpenFlowContext(

@@ -371,6 +371,123 @@ describe('FlowService', () => {
     );
   });
 
+  it('shows quick reply options for configured flow fields', async () => {
+    prisma.flowSession.findUnique.mockResolvedValue({
+      conversationId: 'conversation-1',
+      flowKey: 'special_order',
+      currentStep: 0,
+      collectedData: {},
+      completedAt: null,
+    });
+
+    const result = await service.routeInbound({
+      companyId: 'company-1',
+      conversationId: 'conversation-1',
+      contactId: 'contact-1',
+      channel: 'whatsapp',
+      from: 'whatsapp:+1',
+      body: '12 de agosto',
+    });
+
+    expect(result.decision).toBe('continue_flow:special_order');
+    expect(result.reply).toContain('Respuesta rápida:');
+    expect(result.reply).toContain('1. 10-15 personas');
+    expect(result.reply).toContain('2. 20-25 personas');
+  });
+
+  it('reviews collected data before completing a flow', async () => {
+    prisma.flowSession.findUnique.mockResolvedValue({
+      conversationId: 'conversation-1',
+      flowKey: 'special_order',
+      currentStep: 1,
+      collectedData: { date: '12 de agosto' },
+      completedAt: null,
+    });
+
+    const result = await service.routeInbound({
+      companyId: 'company-1',
+      conversationId: 'conversation-1',
+      contactId: 'contact-1',
+      channel: 'whatsapp',
+      from: 'whatsapp:+1',
+      body: '2',
+    });
+
+    expect(result.decision).toBe('review_flow:special_order');
+    expect(result.status).toBe(ConversationStatus.waiting_customer);
+    expect(result.reply).toContain('Revisa que esté todo bien');
+    expect(result.reply).toContain('Fecha\n12 de agosto');
+    expect(result.reply).toContain('Personas\n20-25 personas');
+    expect(result.reply).toContain('responde "enviar"');
+    expect(prisma.flowSession.update).toHaveBeenCalledWith({
+      where: { conversationId: 'conversation-1' },
+      data: {
+        currentStep: 2,
+        collectedData: { date: '12 de agosto', servings: '20-25 personas' },
+      },
+    });
+  });
+
+  it('completes a reviewed flow only after explicit submit confirmation', async () => {
+    prisma.flowSession.findUnique.mockResolvedValue({
+      conversationId: 'conversation-1',
+      flowKey: 'special_order',
+      currentStep: 2,
+      collectedData: { date: '12 de agosto', servings: '20-25 personas' },
+      completedAt: null,
+    });
+
+    const result = await service.routeInbound({
+      companyId: 'company-1',
+      conversationId: 'conversation-1',
+      contactId: 'contact-1',
+      channel: 'whatsapp',
+      from: 'whatsapp:+1',
+      body: 'enviar',
+    });
+
+    expect(result.decision).toBe('complete_flow:special_order');
+    expect(result.status).toBe(ConversationStatus.needs_human);
+    expect(result.reply).toContain('Solicitud recibida.');
+    expect(result.reply).toContain('Resumen de la solicitud');
+    expect(prisma.flowSession.update).toHaveBeenCalledWith({
+      where: { conversationId: 'conversation-1' },
+      data: {
+        collectedData: { date: '12 de agosto', servings: '20-25 personas' },
+        completedAt: expect.any(Date),
+      },
+    });
+  });
+
+  it('lets the customer correct a reviewed field before submit', async () => {
+    prisma.flowSession.findUnique.mockResolvedValue({
+      conversationId: 'conversation-1',
+      flowKey: 'special_order',
+      currentStep: 2,
+      collectedData: { date: '12 de agosto', servings: '20-25 personas' },
+      completedAt: null,
+    });
+
+    const result = await service.routeInbound({
+      companyId: 'company-1',
+      conversationId: 'conversation-1',
+      contactId: 'contact-1',
+      channel: 'whatsapp',
+      from: 'whatsapp:+1',
+      body: 'Personas: 3',
+    });
+
+    expect(result.decision).toBe('review_flow_update:special_order:servings');
+    expect(result.reply).toContain('He actualizado el dato');
+    expect(result.reply).toContain('Personas\nMás de 25 personas');
+    expect(prisma.flowSession.update).toHaveBeenCalledWith({
+      where: { conversationId: 'conversation-1' },
+      data: {
+        collectedData: { date: '12 de agosto', servings: 'Más de 25 personas' },
+      },
+    });
+  });
+
   it('does not consume a greeting or ask for a field inside an active flow', async () => {
     prisma.flowSession.findUnique.mockResolvedValue({
       conversationId: 'conversation-1',

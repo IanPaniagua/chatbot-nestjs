@@ -365,7 +365,7 @@ function parseFlowFields(
   const fields: CompanyBotConfig['flows'][string]['requiredFields'] = [];
 
   for (const line of value?.split('\n') ?? []) {
-    const [key, label, prompt, optional] = line.split('|').map((part) => part?.trim());
+    const [key, label, prompt, optionalOrOptions, optionsMaybe] = line.split('|').map((part) => part?.trim());
 
     if (!key || !label || !prompt) {
       continue;
@@ -377,8 +377,20 @@ function parseFlowFields(
       prompt,
     };
 
-    if (optional === 'optional' || optional === 'true' || optional === '1') {
+    if (optionalOrOptions === 'optional' || optionalOrOptions === 'true' || optionalOrOptions === '1') {
       field.optional = true;
+    }
+
+    const options = parseKeywordList(optionsMaybe ?? optionalOrOptions);
+    if (
+      options.length > 0 &&
+      optionalOrOptions !== 'optional' &&
+      optionalOrOptions !== 'true' &&
+      optionalOrOptions !== '1'
+    ) {
+      field.options = options;
+    } else if (optionsMaybe) {
+      field.options = parseKeywordList(optionsMaybe);
     }
 
     fields.push(field);

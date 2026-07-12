@@ -45,7 +45,12 @@ export const testCompanyConfig: CompanyBotConfig = {
       welcome: 'Datos para tarta especial.',
       requiredFields: [
         { key: 'date', label: 'Fecha', prompt: '¿Qué fecha?' },
-        { key: 'servings', label: 'Personas', prompt: '¿Cuántas personas?' },
+        {
+          key: 'servings',
+          label: 'Personas',
+          prompt: '¿Cuántas personas?',
+          options: ['10-15 personas', '20-25 personas', 'Más de 25 personas'],
+        },
       ],
       completionMessage: 'Solicitud recibida.',
     },

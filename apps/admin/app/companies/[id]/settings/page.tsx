@@ -267,7 +267,7 @@ export default async function CompanySettingsPage({ params, searchParams }: Page
               />
             </label>
             <p className="muted wide-field">
-              Formato de campos: key|label|pregunta|optional. Una línea por campo.
+              Formato de campos: key|label|pregunta|optional|opción 1, opción 2. Una línea por campo.
             </p>
           </section>
 
@@ -320,7 +320,7 @@ function formatFaqs(faqs: CompanyDetail['config']['settings']['faqs']) {
 function formatFlowFields(fields?: CompanyDetail['config']['settings']['flows'][string]['requiredFields']) {
   return (fields ?? [])
     .map((field) =>
-      [field.key, field.label, field.prompt, field.optional ? 'optional' : '']
+      [field.key, field.label, field.prompt, field.optional ? 'optional' : '', field.options?.join(', ') ?? '']
         .filter((part, index) => index < 3 || Boolean(part))
         .join('|'),
     )

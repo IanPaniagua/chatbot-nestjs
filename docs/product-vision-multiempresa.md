@@ -35,6 +35,21 @@ Para hacerlo facil, elige lo mas parecido:
 
 El usuario puede responder con numero o texto libre.
 
+## Patron de conversacion guiada
+
+Una buena experiencia de WhatsApp no debe parecer un formulario largo ni un chat abierto sin direccion. Debe sentirse como un asistente que lleva al usuario paso a paso:
+
+- Explicar al inicio que se recogeran algunos datos y que podra revisarlos antes de enviarlos.
+- Pedir un solo dato por turno cuando se este cualificando una solicitud.
+- Usar opciones rapidas numeradas cuando la decision sea cerrada o frecuente.
+- Aceptar numero o texto libre para no bloquear al usuario.
+- Confirmar uploads, adjuntos o datos recibidos cuando aplique.
+- Mostrar un resumen antes de enviar la solicitud al equipo.
+- Permitir corregir un dato concreto antes de confirmar.
+- Cerrar con una confirmacion clara de que la solicitud ha sido recibida.
+
+En Twilio/TwiML basico estas opciones se representan como listas numeradas. Para botones realmente clicables en WhatsApp habra que anadir una capa especifica de mensajes interactivos del proveedor.
+
 ## Modelo por empresa
 
 Cada empresa debe tener:

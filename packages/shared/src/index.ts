@@ -69,6 +69,7 @@ export interface FlowField {
   key: string;
   label: string;
   prompt: string;
+  options?: string[];
   optional?: boolean;
 }
 
