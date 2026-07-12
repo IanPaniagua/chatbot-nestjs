@@ -40,6 +40,8 @@ export interface ServiceCatalogItem {
   description: string;
   bestFor: string[];
   notFor?: string[];
+  guidedOptions?: string[];
+  pricingContextOptions?: string[];
   qualificationQuestions: string[];
   requiredData: string[];
   leadTag: string;

@@ -165,9 +165,13 @@ export class AiAgentService {
       'Eres el agente conversacional profesional de la empresa configurada.',
       'Responde siempre en español natural, breve y útil para WhatsApp.',
       'Tu objetivo es entender la necesidad, orientar y recoger el siguiente dato útil sin sonar como un formulario.',
+      'Guía la conversación como un funnel comercial: reduce decisiones abiertas y ofrece 2-3 opciones concretas cuando el usuario no sabe qué responder.',
       'Tu alcance es estricto: puedes conversar de forma natural para entender la necesidad, pero solo puedes afirmar información concreta del negocio si aparece en la configuración o en el conocimiento autorizado.',
       'Recomienda servicios solo desde el catálogo autorizado. Si ninguno encaja, recommendedService=null y qualificationStage="discovery" o "unknown".',
       'Si un servicio encaja, explica por qué de forma breve, haz una sola pregunta útil de cualificación y rellena recommendedService con la key del servicio.',
+      'Cuando el catálogo tenga guidedOptions, convierte la pregunta de cualificación en opciones numeradas. Ejemplo: "Para hacerlo fácil, elige lo más parecido: 1. ..., 2. ..., 3. ...".',
+      'Cuando el usuario pida precio y el catálogo tenga pricingContextOptions, no preguntes "¿cuántas rutas?" de forma abierta: pide elegir el alcance más parecido con opciones numeradas.',
+      'Después de opciones numeradas, permite que el usuario responda con número o texto libre.',
       'Si recomiendas un servicio para una posible propuesta o lead comercial, usa intent="special_order" salvo que el usuario esté pidiendo explícitamente soporte humano.',
       'No cierres la conversación ni derives a humano solo porque el usuario mencione que el chatbot debe derivar a una persona; eso es un requisito funcional, no una petición de hablar con humano ahora.',
       'No inventes precios, rangos de precios, plazos, disponibilidad, garantías, descuentos, políticas, capacidades técnicas específicas ni servicios concretos.',
@@ -261,7 +265,7 @@ export class AiAgentService {
       ? decision.flowKey
       : null;
 
-    return {
+    const normalized: AiAgentDecision = {
       ...decision,
       reply: decision.reply.trim(),
       intent:
@@ -279,6 +283,47 @@ export class AiAgentService {
       leadTag: recommendedService ? recommendedService.leadTag : null,
       usedKnowledgeIds: decision.usedKnowledgeIds.filter((id) => allowedKnowledgeIds.has(id)),
     };
+
+    return this.withGuidedOptions(normalized, recommendedService ?? null, input.body);
+  }
+
+  private withGuidedOptions(
+    decision: AiAgentDecision,
+    service: NonNullable<AiAgentInput['config']['serviceCatalog']>[number] | null,
+    userMessage: string,
+  ): AiAgentDecision {
+    if (!service || decision.needsHuman || decision.qualificationStage === 'handoff_ready') {
+      return decision;
+    }
+
+    if (this.hasNumberedOptions(decision.reply)) {
+      return decision;
+    }
+
+    const isPriceRequest = /\b(cuanto|cuánto|precio|cuesta|coste|presupuesto|tarifa)\b/i.test(
+      this.normalize(userMessage),
+    );
+    const options = isPriceRequest
+      ? service.pricingContextOptions?.slice(0, 3)
+      : service.guidedOptions?.slice(0, 3);
+
+    if (!options || options.length < 2) {
+      return decision;
+    }
+
+    const intro = isPriceRequest
+      ? 'Para orientarlo sin inventar precio, elige el alcance más parecido:'
+      : 'Para hacerlo fácil, elige lo más parecido:';
+    const optionLines = options.map((option, index) => `${index + 1}. ${option}`).join('\n');
+
+    return {
+      ...decision,
+      reply: `${decision.reply}\n\n${intro}\n${optionLines}\n\nPuedes responder con un número o explicarlo con tus palabras.`,
+    };
+  }
+
+  private hasNumberedOptions(reply: string) {
+    return /(^|\n)\s*1[\).\s-]/.test(reply) && /(^|\n)\s*2[\).\s-]/.test(reply);
   }
 
   private isDecisionWithinScope(

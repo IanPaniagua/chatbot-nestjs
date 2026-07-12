@@ -7,7 +7,10 @@ Este repo ya funciona como base reutilizable para crear chatbots de WhatsApp par
 - Entrada de mensajes por WhatsApp usando Twilio.
 - Configuración multiempresa por `companySlug`.
 - Contactos, conversaciones, mensajes, notas internas y métricas.
-- Clasificación inicial por palabras clave configurables.
+- Agente IA con guardrails deterministas.
+- Catalogo de servicios por empresa.
+- Opciones guiadas para meter al cliente en el funnel sin preguntas demasiado abiertas.
+- Clasificación inicial por palabras clave configurables como fallback.
 - Flujos conversacionales para recoger datos paso a paso.
 - FAQ por configuración y por base de conocimiento.
 - Derivación a humano cuando el bot no debe cerrar la conversación.
@@ -69,12 +72,15 @@ ADMIN_SERVER_API_TOKEN="token-largo"
 
 ## Flujo de trabajo para un cliente nuevo
 
-1. Crear config en `apps/api/prisma/seed.ts`.
-2. Ejecutar `pnpm db:seed`.
-3. Poner `DEFAULT_COMPANY_SLUG` al slug del cliente, o usar `?companySlug=...` en Twilio.
-4. Probar mensajes típicos: compra normal, FAQ, solicitud a medida y hablar con humano.
-5. Ajustar keywords, textos y campos hasta que la conversación suene como la empresa.
-6. Usar el panel interno para revisar conversaciones que queden en `needs_human`.
+1. Definir objetivo principal del bot: captar leads, responder dudas, derivar, preparar propuestas o soporte.
+2. Definir catalogo de servicios de la empresa.
+3. Definir funnel por servicio: opciones guiadas, preguntas clave, datos obligatorios y criterio de handoff.
+4. Crear config en admin o en `apps/api/prisma/seed.ts` mientras el onboarding visual no este completo.
+5. Ejecutar `pnpm db:seed` si se ha cambiado seed.
+6. Poner `DEFAULT_COMPANY_SLUG` al slug del cliente, o usar `?companySlug=...` en Twilio.
+7. Probar mensajes tipicos: saludo, precio, servicio principal, duda frecuente, cambio de tema y hablar con humano.
+8. Ajustar servicios, conocimiento, textos y campos hasta que la conversacion suene como la empresa.
+9. Usar el panel interno para revisar conversaciones que queden en `needs_human`.
 
 ## Simular WhatsApp en local
 
@@ -101,10 +107,16 @@ El script envía el mismo formato `application/x-www-form-urlencoded` que usa Tw
 ## Qué se customiza después
 
 - Tono de voz y mensajes del bot.
-- Keywords de clasificación.
+- Catalogo de servicios.
+- Objetivo principal de la conversacion.
+- Funnel por servicio.
+- Opciones guiadas y opciones de alcance/precio.
+- Keywords de clasificación fallback.
 - Preguntas frecuentes.
 - Campos de cada flujo.
 - Reglas de derivación humana.
 - Integraciones reales: CRM, POS, email, calendario, pagos o ERP.
 
 La regla sana es no tocar el core para cada cliente salvo que aparezca una capacidad nueva que deba servir a todos.
+
+Para la vision completa de producto, ver [product-vision-multiempresa.md](product-vision-multiempresa.md).

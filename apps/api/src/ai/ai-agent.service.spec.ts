@@ -17,7 +17,8 @@ describe('AiAgentService', () => {
   };
 
   const validDecision = {
-    reply: 'Tiene sentido. Para orientarte bien, dime cuál es el objetivo del chatbot.',
+    reply:
+      'Tiene sentido. Para hacerlo fácil, elige lo más parecido:\n1. Responder FAQs\n2. Derivar a URLs\n3. Pasar a persona',
     intent: ConversationIntent.special_order,
     status: ConversationStatus.open,
     confidence: 0.87,
@@ -147,6 +148,57 @@ describe('AiAgentService', () => {
     expect(decision?.recommendedService).toBe('whatsapp_chatbot');
     expect(decision?.intent).toBe(ConversationIntent.special_order);
     expect(decision?.leadTag).toBe('service:whatsapp_chatbot');
+  });
+
+  it('adds guided options when a discovery reply is too open', async () => {
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        output_text: JSON.stringify({
+          ...validDecision,
+          reply: 'Perfecto, encaja con un chatbot de WhatsApp. ¿Qué necesitas que haga principalmente?',
+        }),
+      }),
+    }) as unknown as typeof fetch;
+
+    const decision = await service.decide({
+      companyId: 'company-1',
+      conversationId: 'conversation-1',
+      body: 'Necesito un chatbot para WhatsApp',
+      config: testCompanyConfig,
+      activeFlow: null,
+    });
+
+    expect(decision?.reply).toContain('Para hacerlo fácil');
+    expect(decision?.reply).toContain('1. Responder FAQs');
+    expect(decision?.reply).toContain('2. Derivar a URLs');
+    expect(decision?.reply).toContain('3. Pasar a persona');
+  });
+
+  it('adds pricing context options for price requests', async () => {
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        output_text: JSON.stringify({
+          ...validDecision,
+          reply: 'Depende del alcance, así que prefiero no inventarte un precio.',
+          usedKnowledgeIds: [],
+        }),
+      }),
+    }) as unknown as typeof fetch;
+
+    const decision = await service.decide({
+      companyId: 'company-1',
+      conversationId: 'conversation-1',
+      body: 'Cuánto cuesta',
+      config: testCompanyConfig,
+      activeFlow: null,
+    });
+
+    expect(decision?.reply).toContain('Para orientarlo sin inventar precio');
+    expect(decision?.reply).toContain('1. Bot simple');
+    expect(decision?.reply).toContain('2. Bot guiado');
+    expect(decision?.reply).toContain('3. Bot avanzado');
   });
 
   it('rejects unsupported price claims from the AI response', async () => {

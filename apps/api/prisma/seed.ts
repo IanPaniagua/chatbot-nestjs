@@ -299,6 +299,16 @@ const techPresenceConfig: CompanyBotConfig = {
         'Cualificación inicial de leads antes de intervención manual',
       ],
       notFor: ['Sustituir por completo a un equipo comercial en decisiones complejas'],
+      guidedOptions: [
+        'Responder preguntas frecuentes y enviar enlaces útiles',
+        'Clasificar la necesidad y derivar a una URL o formulario',
+        'Filtrar leads y pasar los casos adecuados a una persona',
+      ],
+      pricingContextOptions: [
+        'Bot simple con pocas rutas y respuestas frecuentes',
+        'Bot guiado con varias rutas, URLs y recogida de datos',
+        'Bot avanzado con IA, handoff humano y resumen de lead',
+      ],
       qualificationQuestions: [
         '¿Qué tipos de consultas o necesidades quieres distinguir?',
         '¿A qué URLs, formularios o personas debería derivar cada ruta?',
@@ -316,6 +326,16 @@ const techPresenceConfig: CompanyBotConfig = {
         'Webs que necesitan convertir más visitas en consultas',
         'Negocios con servicios que requieren orientación antes de pedir presupuesto',
         'Captación de leads con contexto antes del formulario',
+      ],
+      guidedOptions: [
+        'Responder dudas antes de pedir contacto',
+        'Captar leads y preparar un briefing',
+        'Derivar a reserva, formulario o WhatsApp',
+      ],
+      pricingContextOptions: [
+        'Asistente sencillo en una página clave',
+        'Asistente para varias secciones y captación de leads',
+        'Asistente con IA, contexto del negocio y handoff',
       ],
       qualificationQuestions: [
         '¿En qué página o sección de la web debería aparecer?',
@@ -335,6 +355,16 @@ const techPresenceConfig: CompanyBotConfig = {
         'Proyectos que necesitan ordenar mensaje, oferta y próximos pasos',
         'Mejorar presencia online antes de invertir en automatización',
       ],
+      guidedOptions: [
+        'Conseguir más contactos desde la web',
+        'Clarificar servicios, mensaje y confianza',
+        'Preparar la web para chatbot o automatización',
+      ],
+      pricingContextOptions: [
+        'Revisión y mejoras puntuales',
+        'Reestructura de páginas clave',
+        'Mejora completa de conversión y captación',
+      ],
       qualificationQuestions: [
         '¿Cuál es la URL actual?',
         '¿Qué quieres mejorar: claridad, leads, reservas, confianza o automatización?',
@@ -353,6 +383,16 @@ const techPresenceConfig: CompanyBotConfig = {
         'Equipos que quieren recibir leads mejor clasificados',
         'Procesos repetitivos de seguimiento, notificación o derivación',
       ],
+      guidedOptions: [
+        'Enviar leads a email, CRM o hoja de cálculo',
+        'Avisar al equipo cuando llega una consulta importante',
+        'Clasificar y resumir leads automáticamente',
+      ],
+      pricingContextOptions: [
+        'Una automatización simple entre dos herramientas',
+        'Varias rutas según tipo de lead',
+        'Sistema completo con seguimiento y alertas',
+      ],
       qualificationQuestions: [
         '¿Qué proceso haces manualmente ahora?',
         '¿Qué herramientas usas ya: web, WhatsApp, email, CRM, hojas de cálculo?',
@@ -370,6 +410,16 @@ const techPresenceConfig: CompanyBotConfig = {
         'Negocios que saben que algo falla pero no tienen claro por dónde empezar',
         'Antes de decidir entre web, chatbot o automatización',
         'Preparar una hoja de ruta de mejoras',
+      ],
+      guidedOptions: [
+        'Revisar web y claridad del mensaje',
+        'Revisar captación de leads y formularios',
+        'Revisar WhatsApp, seguimiento y automatización',
+      ],
+      pricingContextOptions: [
+        'Diagnóstico rápido de prioridades',
+        'Auditoría con recomendaciones accionables',
+        'Hoja de ruta para ejecutar mejoras',
       ],
       qualificationQuestions: [
         '¿Qué canal te preocupa más ahora: web, WhatsApp, redes, formularios o seguimiento?',

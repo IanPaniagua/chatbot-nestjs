@@ -13,6 +13,8 @@ export const testCompanyConfig: CompanyBotConfig = {
       name: 'Chatbot de WhatsApp',
       description: 'Chatbot para WhatsApp con rutas por intención y derivación a enlaces o personas.',
       bestFor: ['consultas por WhatsApp', 'rutas por necesidad'],
+      guidedOptions: ['Responder FAQs', 'Derivar a URLs', 'Pasar a persona'],
+      pricingContextOptions: ['Bot simple', 'Bot guiado', 'Bot avanzado'],
       qualificationQuestions: ['¿Qué rutas debe distinguir?'],
       requiredData: ['rutas', 'datos a recoger'],
       leadTag: 'service:whatsapp_chatbot',

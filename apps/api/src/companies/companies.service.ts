@@ -441,6 +441,8 @@ function normalizeServiceCatalogItem(item: unknown): NonNullable<CompanyBotConfi
     description,
     bestFor: stringArray(raw.bestFor),
     notFor: stringArray(raw.notFor),
+    guidedOptions: stringArray(raw.guidedOptions),
+    pricingContextOptions: stringArray(raw.pricingContextOptions),
     qualificationQuestions: stringArray(raw.qualificationQuestions),
     requiredData: stringArray(raw.requiredData),
     leadTag,

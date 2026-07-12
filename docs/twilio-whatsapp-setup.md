@@ -38,6 +38,8 @@ El webhook completo será:
 https://abc123.trycloudflare.com/webhooks/twilio/whatsapp?companySlug=base-whatsapp
 ```
 
+Importante: ngrok y Cloudflare quick tunnels son solo para desarrollo o demos. Pueden cambiar de URL, caerse o quedarse reconectando. Para vender el bot o usarlo con clientes reales, el webhook debe vivir en una URL HTTPS estable de produccion.
+
 También puedes cambiar `companySlug`:
 
 ```txt
@@ -75,10 +77,13 @@ Resultado esperado:
 Si no responde:
 
 - Revisa que `ngrok` sigue abierto.
+- Si usas Cloudflare quick tunnel, revisa que no este reconectando en bucle.
 - Revisa que la URL de Twilio sea `https`, no `http`.
 - Revisa que la API escucha en `4000`.
 - Revisa que el método sea `POST`.
 - Revisa el `companySlug`.
 - En Twilio, abre los logs del mensaje para ver el código HTTP del webhook.
+
+Si la API local responde pero WhatsApp no, casi siempre el problema esta entre Twilio y la URL publica: tunnel cerrado, URL antigua en Twilio, metodo incorrecto o `companySlug` incorrecto.
 
 Fuente oficial: https://www.twilio.com/docs/whatsapp/sandbox

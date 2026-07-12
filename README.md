@@ -14,6 +14,8 @@ Guía de la base WhatsApp: [docs/whatsapp-chatbot-base.md](docs/whatsapp-chatbot
 
 Guía de Twilio WhatsApp: [docs/twilio-whatsapp-setup.md](docs/twilio-whatsapp-setup.md)
 
+Vision de producto multiempresa: [docs/product-vision-multiempresa.md](docs/product-vision-multiempresa.md)
+
 ## Quickstart
 
 Local con Docker Postgres:
@@ -73,7 +75,9 @@ Incluido:
 - Core multiempresa.
 - Contactos, conversaciones, mensajes y notas internas.
 - Adaptador Twilio WhatsApp.
-- Clasificación inicial por reglas configurables.
+- Agente IA con guardrails deterministas.
+- Catalogo de servicios por empresa con opciones guiadas.
+- Clasificacion inicial por reglas configurables como fallback.
 - Routing para consulta normal, solicitud a medida, cliente empresa, FAQ y humano.
 - Seeds `base-whatsapp`, Beinetti y demo.
 - Panel interno básico.
@@ -84,7 +88,13 @@ No incluido todavía:
 - SaaS público con billing/onboarding.
 - Integración Agora POS real.
 - Voz.
-- Agente IA avanzado autónomo.
+- RAG avanzado con embeddings, PDFs y scraping.
+
+## Criterio de producto
+
+El producto debe funcionar como plataforma multiempresa: cada cliente tiene su bot, su configuracion, su conocimiento, sus servicios, su funnel y su dashboard. El core se comparte; lo especifico de cada empresa vive en configuracion editable.
+
+La IA debe guiar la conversacion, pero no actuar como ChatGPT general. Debe usar el catalogo y conocimiento autorizado, ofrecer opciones concretas cuando el usuario esta indeciso y derivar a humano cuando corresponde.
 
 ## API MVP
 
