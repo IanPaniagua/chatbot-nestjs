@@ -63,6 +63,8 @@ https://api.tu-dominio.com/webhooks/twilio/whatsapp?companySlug=tech-presence-ma
 
 Botones reales de WhatsApp quedan para una fase posterior. La version actual usa listas numeradas con fallback robusto, que es mejor para salir a demo estable cuanto antes.
 
+Checklist completo: [production-demo-runbook.md](production-demo-runbook.md)
+
 ## 3. Configurar Twilio Sandbox
 
 En Twilio Console:

@@ -16,6 +16,8 @@ Guía de Twilio WhatsApp: [docs/twilio-whatsapp-setup.md](docs/twilio-whatsapp-s
 
 Vision de producto multiempresa: [docs/product-vision-multiempresa.md](docs/product-vision-multiempresa.md)
 
+Runbook de demo en produccion: [docs/production-demo-runbook.md](docs/production-demo-runbook.md)
+
 ## Quickstart
 
 Local con Docker Postgres:
