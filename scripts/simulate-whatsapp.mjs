@@ -1,14 +1,25 @@
 const args = process.argv.slice(2);
 
 let companySlug = process.env.COMPANY_SLUG || process.env.DEFAULT_COMPANY_SLUG || 'base-whatsapp';
+let from = process.env.WHATSAPP_FROM || 'whatsapp:+34600000000';
+let useNewPhone = false;
 const messageParts = [];
 
 for (const arg of args) {
   if (arg.startsWith('--company=')) {
     companySlug = arg.slice('--company='.length);
+  } else if (arg.startsWith('--from=')) {
+    const rawFrom = arg.slice('--from='.length);
+    from = rawFrom.startsWith('whatsapp:') ? rawFrom : `whatsapp:${rawFrom}`;
+  } else if (arg === '--new') {
+    useNewPhone = true;
   } else {
     messageParts.push(arg);
   }
+}
+
+if (useNewPhone) {
+  from = `whatsapp:+34${Math.floor(600000000 + Math.random() * 100000000)}`;
 }
 
 const apiBaseUrl =
@@ -17,7 +28,6 @@ const body =
   messageParts.join(' ').trim() ||
   process.env.WHATSAPP_BODY ||
   'Hola, necesito un presupuesto personalizado';
-const from = process.env.WHATSAPP_FROM || 'whatsapp:+34600000000';
 const to = process.env.WHATSAPP_TO || 'whatsapp:+14155238886';
 
 const webhookUrl = new URL('/webhooks/twilio/whatsapp', apiBaseUrl);

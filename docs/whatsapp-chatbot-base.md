@@ -102,6 +102,12 @@ También puedes probar un cliente concreto:
 pnpm simulate:whatsapp --company=postres-beinetti "Quiero una tarta para 20 personas"
 ```
 
+Para evitar reutilizar una conversación anterior durante demos, usa un teléfono nuevo:
+
+```bash
+pnpm simulate:whatsapp --new --company=tech-presence-matters "Cuánto cuesta un chatbot de WhatsApp"
+```
+
 El script envía el mismo formato `application/x-www-form-urlencoded` que usa Twilio y muestra la respuesta del bot.
 
 ## Qué se customiza después
