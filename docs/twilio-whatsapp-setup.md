@@ -46,6 +46,23 @@ También puedes cambiar `companySlug`:
 https://abc123.trycloudflare.com/webhooks/twilio/whatsapp?companySlug=clinica-demo
 ```
 
+## 2.1. Demo de cliente / produccion inicial
+
+Para enseñar la demo a un cliente sin sustos, evita depender de una URL `trycloudflare.com` o `ngrok` temporal. El objetivo minimo es:
+
+- API desplegada con URL HTTPS estable.
+- `DATABASE_URL`, `ADMIN_API_TOKEN`, `DEFAULT_COMPANY_SLUG`, `OPENAI_API_KEY`, `OPENAI_MODEL` y `AI_AGENT_ENABLED` configurados en el entorno de despliegue.
+- Twilio apuntando a la URL estable:
+
+```txt
+https://api.tu-dominio.com/webhooks/twilio/whatsapp?companySlug=tech-presence-matters
+```
+
+- Admin desplegado y protegido para revisar conversaciones.
+- Prueba end-to-end desde WhatsApp real antes de enseñar la demo.
+
+Botones reales de WhatsApp quedan para una fase posterior. La version actual usa listas numeradas con fallback robusto, que es mejor para salir a demo estable cuanto antes.
+
 ## 3. Configurar Twilio Sandbox
 
 En Twilio Console:

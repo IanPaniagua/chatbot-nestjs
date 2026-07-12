@@ -48,7 +48,15 @@ Una buena experiencia de WhatsApp no debe parecer un formulario largo ni un chat
 - Permitir corregir un dato concreto antes de confirmar.
 - Cerrar con una confirmacion clara de que la solicitud ha sido recibida.
 
-En Twilio/TwiML basico estas opciones se representan como listas numeradas. Para botones realmente clicables en WhatsApp habra que anadir una capa especifica de mensajes interactivos del proveedor.
+En Twilio/TwiML basico estas opciones se representan como listas numeradas. Esto es suficiente para demo y produccion inicial porque mantiene el webhook simple y fiable.
+
+Backlog posterior: botones reales de WhatsApp. Para una UX premium, algunas decisiones cerradas deben poder mostrarse como botones clicables usando mensajes interactivos de Twilio, por ejemplo `quick-reply` para 2-3 opciones y `list-picker` cuando haya mas opciones. Esa capa debe:
+
+- Reutilizar las mismas `options` de los campos y servicios.
+- Enviar botones solo cuando existan credenciales y `ContentSid` configurados.
+- Leer `ButtonText` y `ButtonPayload` en el webhook.
+- Mantener fallback a lista numerada si Twilio rechaza el mensaje o faltan plantillas.
+- Entrar despues de tener produccion estable, no antes.
 
 ## Modelo por empresa
 
@@ -81,6 +89,8 @@ Antes de venderlo de forma seria, hay que cerrar una base estable:
 9. Documentar runbook de soporte: que mirar si WhatsApp no responde.
 
 Los quick tunnels solo son para desarrollo y demos. No son aceptables como infraestructura de produccion.
+
+Para la demo de cliente inmediata, la prioridad no es anadir botones reales todavia. La prioridad es que el bot responda siempre desde una URL HTTPS estable, que Twilio quede configurado sin depender de un tunel temporal, y que el admin permita revisar conversaciones sin friccion.
 
 ## Onboarding de nuevos clientes
 
