@@ -66,9 +66,18 @@ pnpm build
 API:
 
 ```bash
+pnpm --filter @chatbot/shared build
 pnpm --filter @chatbot/api build
 pnpm --filter @chatbot/api start
 ```
+
+Render build command recomendado para la API:
+
+```bash
+pnpm install --frozen-lockfile && pnpm --filter @chatbot/shared build && pnpm db:generate && pnpm --filter @chatbot/api build
+```
+
+Render define `PORT` automaticamente. Si se usa `API_PORT`, configurarlo como `10000`.
 
 Admin:
 

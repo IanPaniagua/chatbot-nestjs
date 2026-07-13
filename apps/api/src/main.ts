@@ -10,7 +10,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
   const config = app.get(ConfigService);
-  const port = config.get<number>('API_PORT') ?? 4000;
+  const port = config.get<number>('PORT') ?? config.get<number>('API_PORT') ?? 4000;
   await app.listen(port);
   Logger.log(`API listening on http://localhost:${port}`);
 }

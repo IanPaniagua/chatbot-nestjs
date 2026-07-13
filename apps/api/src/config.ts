@@ -3,6 +3,7 @@ import { z } from 'zod';
 const envSchema = z.object({
   DATABASE_URL: z.string().min(1),
   API_PORT: z.coerce.number().default(4000),
+  PORT: z.coerce.number().optional(),
   ADMIN_API_TOKEN: z.string().min(12).default('dev-admin-token-change-me'),
   DEFAULT_COMPANY_SLUG: z.string().min(1).default('base-whatsapp'),
   TWILIO_ACCOUNT_SID: z.string().optional().default(''),
